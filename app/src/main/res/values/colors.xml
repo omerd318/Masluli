@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="masluli_green">#90A17D</color>
+    <color name="masluli_grey">#EEEEEE</color>
+    <color name="masluli_dark_green">#61764B</color>
+    <color name="masluli_cards">#CFB997</color>
 </resources>
