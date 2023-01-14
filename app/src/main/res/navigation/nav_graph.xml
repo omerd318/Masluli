@@ -8,16 +8,16 @@
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.masluli.MapFragment"
-        android:label="fragment_map"
+        android:label="Map"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.masluli.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="My Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/routesFragment"
         android:name="com.example.masluli.RoutesFragment"
-        android:label="fragment_routes"
+        android:label="Masluli"
         tools:layout="@layout/fragment_routes" />
 </navigation>

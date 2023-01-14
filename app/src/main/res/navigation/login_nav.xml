@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.masluli.LoginFragment"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login">
 
         <action
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.masluli.RegisterFragment"
-        android:label="fragment_register"
+        android:label="Join Masluli"
         tools:layout="@layout/fragment_register" />
 
 </navigation>
