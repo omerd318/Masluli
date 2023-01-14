@@ -2,8 +2,10 @@ package com.example.masluli;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,22 +13,19 @@ import android.view.ViewGroup;
 
 import com.example.masluli.databinding.FragmentRoutesBinding;
 
-//import com.example.masluli.databinding;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RoutesFragment#newInstance} factory method to
+ * Use the {@link RoutesFragment} factory method to
  * create an instance of this fragment.
  */
 public class RoutesFragment extends Fragment {
 
     FragmentRoutesBinding binding;
-//    StudentRecyclerAdapter adapter;
+    RoutesListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -36,10 +35,10 @@ public class RoutesFragment extends Fragment {
         binding = FragmentRoutesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.recyclerView.setHasFixedSize(true);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        adapter = new StudentRecyclerAdapter(getLayoutInflater(),data);
-//        binding.recyclerView.setAdapter(adapter);
+        binding.routesListRv.setHasFixedSize(true);
+        binding.routesListRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new RoutesListAdapter(getLayoutInflater());
+        binding.routesListRv.setAdapter(adapter);
 
         return view;
     }
