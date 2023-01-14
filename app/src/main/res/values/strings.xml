@@ -6,4 +6,9 @@
     <string name="password">Password</string>
     <string name="login"><u>Let`s travel!</u></string>
     <string name="moveToRegister">Not register yet? <u>Come travel with us</u></string>
+    <string name="name">Full name</string>
+    <string name="age">Age</string>
+    <string name="area">Where am I from</string>
+    <string name="registerPage">Join Masluli</string>
+    <string name="register"><u>Let`s start to travel!</u></string>
 </resources>
