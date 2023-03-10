@@ -1,17 +1,17 @@
 package com.example.masluli;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,84 +19,111 @@ import android.view.ViewGroup;
 import android.graphics.Color;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.masluli.Model.User;
+import com.example.masluli.databinding.FragmentRegisterBinding;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class RegisterFragment extends Fragment {
-    private static final int REQUEST_CAMERA = 1;
-    ActivityResultLauncher<String> galleryContent;
-    Button regBtn;
-    ProgressBar progressBar;
     String area;
-    ImageView userImv;
-    Bitmap imageBitmap;
-    ImageButton cameraBtn;
-    ImageButton galleryBtn;
+    FragmentRegisterBinding binding;
+    ActivityResultLauncher<Void> cameraLauncher;
+    ActivityResultLauncher<String> galleryLauncher;
+    Boolean isAvatarSelected = false;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FragmentActivity parentActivity = getActivity();
+
+        cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(), new ActivityResultCallback<Bitmap>() {
+            @Override
+            public void onActivityResult(Bitmap result) {
+                if (result != null) {
+                    binding.registerImageImv.setImageBitmap(result);
+                    isAvatarSelected = true;
+                }
+            }
+        });
+        galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri result) {
+                if (result != null){
+                    binding.registerImageImv.setImageURI(result);
+                    isAvatarSelected = true;
+                }
+            }
+        });
+    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentRegisterBinding.inflate(inflater,container,false);
+        View view = binding.getRoot();
 
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
         initSpinner(view);
-        progressBar = view.findViewById(R.id.register_progressbar);
-        progressBar.setVisibility(View.GONE);
+        binding.registerProgressbar.setVisibility(View.GONE);
 
-        cameraBtn = view.findViewById(R.id.register_camera_btn);
-        galleryBtn = view.findViewById(R.id.register_gallery_btn);
-
-        cameraBtn.setOnClickListener(v -> {
-            openCamera();
+        binding.registerCameraBtn.setOnClickListener(view1->{
+            cameraLauncher.launch(null);
         });
 
-        galleryBtn.setOnClickListener(v -> {
-            galleryContent.launch("image/*");
+        binding.registerGalleryBtn.setOnClickListener(view1->{
+            galleryLauncher.launch("image/*");
         });
 
-        regBtn = view.findViewById(R.id.register_register_btn);
-        regBtn.setOnClickListener(v -> {
+        binding.registerRegisterBtn.setOnClickListener(v -> {
 
-//            String name = ((EditText)view.findViewById(R.id.register_name_et)).getText().toString();
-//            String email = ((EditText)view.findViewById(R.id.register_email_et)).getText().toString();
-//            String password = ((EditText)view.findViewById(R.id.register_password_et)).getText().toString();
-//            String age = ((EditText)view.findViewById(R.id.register_age_et)).getText().toString();
+            String name = binding.registerNameEt.getText().toString();
+            String email = binding.registerEmailEt.getText().toString();
+            String password = binding.registerPasswordEt.getText().toString();
+            String age = binding.registerAgeEt.getText().toString();
 
-//            if(!email.equals("") && !password.equals("") && !name.equals("") &&
-//                    !age.equals("") && !area.equals("")) {
-//
-//                progressBar.setVisibility(View.VISIBLE);
-//                User newUser = new User(name, email, age, area);
-//
-//                if(imageBitmap != null) {
-//                    // TODO: add to storage account and save url
-//                        newUser.setImageUrl("url");
-//                }
-//
-//                // TODO: save to db
-//            }
-//            else {
-//                Toast.makeText(MyApplication.getContext(), "All the fields are required",
-//                        Toast.LENGTH_SHORT).show();
-//            }
+            if(!email.equals("") && !password.equals("") && !name.equals("") &&
+                    !age.equals("") && !area.equals("")) {
 
-            toMainScreen();
+                binding.registerProgressbar.setVisibility(View.VISIBLE);
+                User newUser = new User(name, email, age, area);
+
+                if(isAvatarSelected) {
+                    binding.registerImageImv.setDrawingCacheEnabled(true);
+                    binding.registerImageImv.buildDrawingCache();
+                    Bitmap bitmap = ((BitmapDrawable) binding.registerImageImv.getDrawable()).getBitmap();
+
+                    // TODO: add to storage account and save url
+//                    Model.instance().uploadImage(stId, bitmap, url->{
+//                        if (url != null){
+//                            st.setAvatarUrl(url);
+//                        }
+//                        Model.instance().addStudent(st, (unused) -> {
+//                            Navigation.findNavController(view1).popBackStack();
+//                        });
+//                    });
+                } else {
+                    // TODO: save without img
+//                    Model.instance().addStudent(st, (unused) -> {
+//                        Navigation.findNavController(view1).popBackStack();
+//                    });
+                }
+
+                // TODO: save to db
+                toMainScreen();
+            }
+            else {
+                Toast.makeText(getContext(), "All the fields are required",
+                        Toast.LENGTH_LONG).show();
+            }
+
         });
 
         return view;
@@ -159,46 +186,6 @@ public class RegisterFragment extends Fragment {
                 });
 
         spinner.setAdapter(spinnerArrayAdapter);
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        galleryContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-                uri -> {
-                    // Handle the returned Uri
-                    if (uri == null) {
-                        return;
-                    }
-
-                    try {
-                        imageBitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (imageBitmap == null) return;
-
-                    userImv.setImageBitmap(imageBitmap);
-                });
-    }
-
-    private void openCamera() {
-        Intent takePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(takePhoto,REQUEST_CAMERA);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CAMERA){
-            if (resultCode == Activity.RESULT_OK){
-                Bundle extras = data.getExtras();
-                imageBitmap = (Bitmap) extras.get("data");
-                userImv.setImageBitmap(imageBitmap);
-            }
-        }
     }
 
     private void toMainScreen() {
