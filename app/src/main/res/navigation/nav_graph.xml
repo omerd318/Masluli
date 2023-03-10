@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/routesFragment">
+    app:startDestination="@id/maslulimFragment">
 
     <fragment
         android:id="@+id/mapFragment"
@@ -16,8 +16,8 @@
         android:label="My Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/routesFragment"
-        android:name="com.example.masluli.RoutesFragment"
+        android:id="@+id/maslulimFragment"
+        android:name="com.example.masluli.MaslulimFragment"
         android:label="Masluli"
-        tools:layout="@layout/fragment_routes" />
+        tools:layout="@layout/fragment_maslulim" />
 </navigation>
