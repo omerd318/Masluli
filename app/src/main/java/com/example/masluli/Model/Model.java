@@ -20,11 +20,22 @@ public class Model {
     }
 
     public static final Model instance = new Model();
+    private FirebaseModel firebaseModel = new FirebaseModel();
     public Executor executor = Executors.newFixedThreadPool(1);
     public Handler mainThread = HandlerCompat.createAsync(Looper.getMainLooper());
     AppLocalDbRepository localDb = AppLocalDb.getAppDb();
 
     final public MutableLiveData<MaslulimListLoadingState> EventMaslulimListLoadingState = new MutableLiveData<MaslulimListLoadingState>(MaslulimListLoadingState.NOT_LOADING);
+
+    public static Model instance(){
+        return instance;
+    }
+    private Model(){
+    }
+
+    public interface Listener<T>{
+        void onComplete(T data);
+    }
 
     private LiveData<List<Maslul>> allMaslulimList;
 

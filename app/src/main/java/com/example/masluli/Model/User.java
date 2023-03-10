@@ -1,6 +1,11 @@
 package com.example.masluli.Model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
+    final public static String COLLECTION_NAME = "users";
+
     String name = "";
     String email = "";
     String age = "";
@@ -52,5 +57,30 @@ public class User {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Map<String, Object> toJson() {
+        Map<String, Object> userJson = new HashMap<String, Object>();
+
+        userJson.put("email",email);
+        userJson.put("name",name);
+        userJson.put("area",area);
+        userJson.put("age",age);
+        userJson.put("imageUrl",imageUrl);
+
+        return userJson;
+    }
+
+    public static User createUser(Map<String, Object> userJson) {
+        String email = (String) userJson.get("email");
+        String name = (String) userJson.get("name");
+        String area = (String) userJson.get("area");
+        String age = (String) userJson.get("age");
+        String imageUrl = (String) userJson.get("imageUrl");
+
+        User user = new User(name, email, age, area);
+        user.setImageUrl(imageUrl);
+
+        return user;
     }
 }

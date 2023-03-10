@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "196690109861",
+    "project_id": "masluli",
+    "storage_bucket": "masluli.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196690109861:android:1b1fa3024c5fa34ea2344c",
+        "android_client_info": {
+          "package_name": "com.example.masluli"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "196690109861-t8f413mjkfhvpkilrkd9q51n76luhu5t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ7HNv5TrcNwZG1u9JCRmJtDBuzz5IhC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "196690109861-t8f413mjkfhvpkilrkd9q51n76luhu5t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
