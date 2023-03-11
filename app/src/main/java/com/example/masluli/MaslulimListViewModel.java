@@ -21,7 +21,7 @@ public class MaslulimListViewModel extends ViewModel {
     public MaslulimListViewModel(ListMode listMode) {
         mode = listMode;
         if (listMode == ListMode.AllMaslulim) {
-            data = Model.instance.getAllMaslulim();
+            data = Model.instance().getAllMaslulim();
         } else {
 //            data = Model.instance.getMyMaslulim;  // TODO: add getMyMaslulim to model
         }
