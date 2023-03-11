@@ -2,4 +2,8 @@
     <string name="app_name">Masluli</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="routeName">Route Name is...</string>
+    <string name="routeLocation">Location?</string>
+    <string name="routeLength">Length</string>
+    <string name="routeDiffLvl">Difficulty level is...</string>
 </resources>

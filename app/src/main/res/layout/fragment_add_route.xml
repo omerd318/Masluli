@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,5 +9,171 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"/>
-</FrameLayout>
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_path_name_et"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="@string/routeName"
+            android:textColorHint="@color/masluli_green"
+            app:boxBackgroundColor="@color/masluli_cards"
+            app:boxStrokeColor="@color/masluli_green"
+            app:boxStrokeWidth="0dp"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textShortMessage"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_path_location_et"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="@string/routeLocation"
+            android:textColorHint="@color/masluli_green"
+            app:boxBackgroundColor="@color/masluli_cards"
+            app:boxStrokeColor="@color/masluli_green"
+            app:boxStrokeWidth="0dp"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full">
+
+            <AutoCompleteTextView
+                android:id="@+id/add_path_location_ac"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_path_length_et"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="@string/routeLength"
+                android:textColorHint="@color/masluli_green"
+                app:boxBackgroundColor="@color/masluli_cards"
+                app:boxStrokeColor="@color/masluli_green"
+                app:boxStrokeWidth="0dp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textShortMessage"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_path_diff_lvl_et"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="@string/routeDiffLvl"
+                android:textColorHint="@color/masluli_green"
+                app:boxBackgroundColor="@color/masluli_cards"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/masluli_green"
+                app:boxStrokeWidth="0dp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full">
+
+                <AutoCompleteTextView
+                    android:id="@+id/add_path_diff_lvl_ac"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+<!--        <com.google.android.material.button.MaterialButtonToggleGroup-->
+<!--            android:id="@+id/toggleButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/button1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Button 1"-->
+<!--                style="?attr/materialButtonOutlinedStyle"-->
+<!--                />-->
+<!--            <Button-->
+<!--                android:id="@+id/button2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Button 2"-->
+<!--                style="?attr/materialButtonOutlinedStyle"-->
+<!--                />-->
+<!--            <Button-->
+<!--                android:id="@+id/button3"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Button 3"-->
+<!--                style="?attr/materialButtonOutlinedStyle"-->
+<!--                />-->
+<!--        </com.google.android.material.button.MaterialButtonToggleGroup>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ToggleButton
+                android:id="@+id/add_path_accessible_toggle_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/masluli_cards"
+                android:isScrollContainer="false"
+                android:text="Accessible"
+                android:textColor="@color/masluli_green"
+                android:textColorLink="@color/masluli_green"
+                android:textOff="Not Accessible"
+                android:textOn="Accessible" />
+
+            <ToggleButton
+                android:id="@+id/add_path_water_toggle_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/masluli_cards"
+                android:text="Water"
+                android:textColor="@color/masluli_green"
+                android:textColorLink="@color/masluli_green"
+                android:textOff="No water"
+                android:textOn="Water" />
+
+            <ToggleButton
+                android:id="@+id/add_path_round_toggle_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/masluli_cards"
+                android:text="Rounded"
+                android:textColor="@color/masluli_green"
+                android:textColorLink="@color/masluli_green"
+                android:textOff="Not rounded"
+                android:textOn="Rounded" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
