@@ -8,45 +8,124 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.example.masluli.MyApplication;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 public class Maslul {
+    public static final String COLLECTION_NAME = "maslulim";
+    public static final String LAST_UPDATED = "lastUpdated";
+    public static final String LOCAL_LAST_UPDATED = "maslulim_local_last_update";
+
     @PrimaryKey
     @NonNull
     String id;
     String title;
     String location;
+    int length;
+    Difficulty difficulty;
+    Boolean isAccessible;
+    Boolean isWater;
+    Boolean isRounded;
     String description;
     String userId;
     String imageUrl;
-    Long localLastUpdate;
+    Long lastUpdated;  // on firebase
     Boolean isDeleted;
 
-    static final String ID = "id";
-    static final String TITLE = "title";
-    static final String LOCATION = "location";
-    static final String DESCRIPTION = "description";
-    static final String COLLECTION = "maslul";
-    static final String LAST_UPDATED = "lastUpdated";
-    static final String LOCAL_LAST_UPDATED = "maslulim_local_last_update";
+    public Maslul(@NonNull String id, String title, String location, int length, Difficulty dif, Boolean isAccessible, Boolean isWater, Boolean isRounded, String description, String userId) {
+        this.id = id;
+        this.title = title;
+        this.location = location;
+        this.length = length;
+        this.difficulty = dif;
+        this.isAccessible = isAccessible;
+        this.isWater = isWater;
+        this.isRounded = isRounded;
+        this.description = description;
+        this.userId = userId;
+        this.isDeleted = false;
+    }
 
     public Maslul() {
         this.id = "";
         this.title = "";
         this.location = "";
+        this.length = 0;
+        this.difficulty = Difficulty.Easy;
+        this.isAccessible = false;
+        this.isWater = false;
+        this.isRounded = false;
         this.description = "";
         this.userId = "";
-        this.localLastUpdate = new Long(0) ;
+        this.lastUpdated = new Long(0);
         this.isDeleted = false;
     }
 
-    public Maslul(@NonNull String id, String title, String location, String description, String userId) {
-        this.id = id;
-        this.title = title;
-        this.location = location;
-        this.description = description;
-        this.userId = userId;
-        this.isDeleted = false;
+    public enum Difficulty {
+        Easy,
+        Medium,
+        Hard
+    }
+
+    public static Long getLocalLastUpdate() {
+        SharedPreferences sharedPref = MyApplication.getContext().getSharedPreferences("TAG", Context.MODE_PRIVATE);
+        return sharedPref.getLong(LOCAL_LAST_UPDATED, 0);
+    }
+
+    public static void setLocalLastUpdate(Long time) {
+        SharedPreferences sharedPref = MyApplication.getContext().getSharedPreferences("TAG", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putLong(LOCAL_LAST_UPDATED, time);
+        editor.commit();
+    }
+
+    public static Maslul createMaslul(Map<String, Object> maslulJson, String docId) {
+        String title = (String) maslulJson.get("title");
+        String location = (String) maslulJson.get("location");
+        int length = ((Long) maslulJson.get("length")).intValue();
+        Difficulty difficulty = Difficulty.valueOf((String) maslulJson.get("difficulty"));
+//        Difficulty difficulty = Difficulty.valueOf("Easy");
+        Boolean isAccessible = (Boolean) maslulJson.get("isAccessible");
+        Boolean isWater = (Boolean) maslulJson.get("isWater");
+        Boolean isRounded = (Boolean) maslulJson.get("isRounded");
+        String description = (String) maslulJson.get("description");
+        String userId = (String) maslulJson.get("userId");
+        String imageUrl = (String) maslulJson.get("imageUrl");
+        Boolean isDeleted = (Boolean) maslulJson.get("isDeleted");
+
+        Timestamp timestamp = (Timestamp) maslulJson.get(LAST_UPDATED);
+        Long lastUpdated = timestamp.getSeconds();
+
+        Maslul maslulItem = new Maslul(docId, title, location, length, difficulty, isAccessible, isWater, isRounded, description, userId);
+
+        maslulItem.setLastUpdated(lastUpdated);
+        maslulItem.setImageUrl(imageUrl);
+        maslulItem.setId(docId);
+        maslulItem.setDeleted(isDeleted);
+        return maslulItem;
+    }
+
+    public Map<String, Object> toJson() {
+        Map<String, Object> json = new HashMap<>();
+        json.put("id", id);
+        json.put("title", title);
+        json.put("location", location);
+        json.put("length", length);
+        json.put("difficulty", difficulty);
+        json.put("isAccessible", isAccessible);
+        json.put("isWater", isWater);
+        json.put("isRounded", isRounded);
+        json.put("description", description);
+        json.put("userId", userId);
+        json.put("imageUrl", imageUrl);
+        json.put("isDeleted", isDeleted);
+
+        json.put(LAST_UPDATED, FieldValue.serverTimestamp());
+        return json;
     }
 
     @NonNull
@@ -82,24 +161,52 @@ public class Maslul {
         this.description = description;
     }
 
+    public Boolean getAccessible() {
+        return isAccessible;
+    }
+
+    public void setAccessible(Boolean accessible) {
+        isAccessible = accessible;
+    }
+
+    public Boolean getWater() {
+        return isWater;
+    }
+
+    public void setWater(Boolean water) {
+        isWater = water;
+    }
+
+    public Boolean getRounded() {
+        return isRounded;
+    }
+
+    public void setRounded(Boolean rounded) {
+        isRounded = rounded;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public static Long getLocalLastUpdate() {
-        SharedPreferences sharedPref = MyApplication.getContext().getSharedPreferences("TAG", Context.MODE_PRIVATE);
-        return sharedPref.getLong(LOCAL_LAST_UPDATED, 0);
-    }
-
-    public static void setLocalLastUpdate(Long time) {
-        SharedPreferences sharedPref = MyApplication.getContext().getSharedPreferences("TAG", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putLong(LOCAL_LAST_UPDATED,time);
-        editor.commit();
     }
 
     public Boolean getDeleted() {
@@ -116,5 +223,13 @@ public class Maslul {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Long getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Long lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }
