@@ -1,5 +1,6 @@
 package com.example.masluli.Model;
 
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -7,6 +8,8 @@ import android.util.Log;
 import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -77,5 +80,21 @@ public class Model {
 //                EventMaslulimListLoadingState.postValue(MaslulimListLoadingState.NOT_LOADING);
 //            });
 //        });
+    }
+
+    public void register(String email, String password, Model.Listener<FirebaseUser> listener) {
+        firebaseModel.register(email,password, listener);
+    }
+
+    public void login(String email, String password, Model.Listener<FirebaseUser> listener) {
+        firebaseModel.login(email,password, listener);
+    }
+
+    public void addUser(User user, Model.Listener<User> listener){
+        firebaseModel.addUser(user, listener);
+    }
+
+    public void uploadImage(String name, Bitmap bitmap, Listener<String> listener) {
+        firebaseModel.uploadImage(name,bitmap,listener);
     }
 }

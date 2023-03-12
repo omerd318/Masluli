@@ -26,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.masluli.Model.Model;
 import com.example.masluli.Model.User;
 import com.example.masluli.databinding.FragmentRegisterBinding;
 
@@ -42,7 +43,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragmentActivity parentActivity = getActivity();
 
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(), new ActivityResultCallback<Bitmap>() {
             @Override
@@ -93,31 +93,35 @@ public class RegisterFragment extends Fragment {
                     !age.equals("") && !area.equals("")) {
 
                 binding.registerProgressbar.setVisibility(View.VISIBLE);
-                User newUser = new User(name, email, age, area);
 
-                if(isAvatarSelected) {
-                    binding.registerImageImv.setDrawingCacheEnabled(true);
-                    binding.registerImageImv.buildDrawingCache();
-                    Bitmap bitmap = ((BitmapDrawable) binding.registerImageImv.getDrawable()).getBitmap();
+                Model.instance.register(email, password, user -> {
+                    if(user != null) {
+                        User newUser = new User(name, email, age, area);
 
-                    // TODO: add to storage account and save url
-//                    Model.instance().uploadImage(stId, bitmap, url->{
-//                        if (url != null){
-//                            st.setAvatarUrl(url);
-//                        }
-//                        Model.instance().addStudent(st, (unused) -> {
-//                            Navigation.findNavController(view1).popBackStack();
-//                        });
-//                    });
-                } else {
-                    // TODO: save without img
-//                    Model.instance().addStudent(st, (unused) -> {
-//                        Navigation.findNavController(view1).popBackStack();
-//                    });
-                }
+                        if (isAvatarSelected) {
+                            binding.registerImageImv.setDrawingCacheEnabled(true);
+                            binding.registerImageImv.buildDrawingCache();
+                            Bitmap imageBitmap = ((BitmapDrawable) binding.registerImageImv.getDrawable()).getBitmap();
 
-                // TODO: save to db
-                toMainScreen();
+                            // Add to storage account and save url
+                            Model.instance().uploadImage(email, imageBitmap, url->{
+                                if (url != null){
+                                    newUser.setImageUrl(url);
+                                }
+                                Model.instance().addUser(newUser, usr -> {
+                                    binding.registerProgressbar.setVisibility(View.GONE);
+                                    toMainScreen();
+                                });
+                            });
+                        } else {
+                            // Save without img
+                            Model.instance().addUser(newUser, usr -> {
+                                binding.registerProgressbar.setVisibility(View.GONE);
+                                toMainScreen();
+                            });
+                        }
+                    } else { binding.registerProgressbar.setVisibility(View.GONE); }
+                });
             }
             else {
                 Toast.makeText(getContext(), "All the fields are required",
@@ -174,8 +178,7 @@ public class RegisterFragment extends Fragment {
                             AdapterView<?> parent, View view,
                             int position, long id) {
 
-                        if(position > 0){
-
+                        if (position > 0) {
                             area = (String)parent.getItemAtPosition(position);
                         }
                     }

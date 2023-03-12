@@ -101,13 +101,13 @@ public class FirebaseModel {
                 });
     }
 
-    public void addUser(User user, Model.Listener<Void> listener) {
+    public void addUser(User user, Model.Listener<User> listener) {
         Map<String, Object> userJson = user.toJson();
         db.collection(User.COLLECTION_NAME)
                 .document(user.getEmail())
                 .set(userJson)
-                .addOnSuccessListener(unused -> listener.onComplete(null))
-                .addOnFailureListener(e -> listener.onComplete(null));
+                .addOnSuccessListener(unused -> listener.onComplete(user))
+                .addOnFailureListener(e -> listener.onComplete(user));
     }
 
     public void getUserById(String email, Model.Listener<User> listener) {
