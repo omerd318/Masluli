@@ -1,5 +1,6 @@
 package com.example.masluli.Model;
 
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -7,6 +8,9 @@ import android.util.Log;
 import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.masluli.R;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -19,7 +23,14 @@ public class Model {
         NOT_LOADING
     }
 
-    private static final Model instance = new Model();
+    public static final String[] areas = new String[]{
+            "Where am I form",
+            "North",
+            "Center",
+            "South"
+    };
+
+    public static final Model instance = new Model();
     private FirebaseModel firebaseModel = new FirebaseModel();
     public Executor executor = Executors.newFixedThreadPool(1);
     public Handler mainThread = HandlerCompat.createAsync(Looper.getMainLooper());
@@ -89,5 +100,38 @@ public class Model {
             refreshAllMaslulim();
             listener.onComplete(null);
         });
+    }
+
+    public void register(String email, String password, Model.Listener<FirebaseUser> listener) {
+        firebaseModel.register(email,password, listener);
+    }
+
+    public void login(String email, String password, Model.Listener<FirebaseUser> listener) {
+        firebaseModel.login(email,password, listener);
+    }
+
+    public boolean isSignedIn() {
+        return firebaseModel.isSignedIn();
+    }
+
+    public void signOut() {
+        EventMaslulimListLoadingState.postValue(null);
+        firebaseModel.signOut();
+    }
+
+    public void addUser(User user, Model.Listener<User> listener){
+        firebaseModel.addUser(user, listener);
+    }
+
+    public void getUserById(String email, Model.Listener<User> listener) {
+        firebaseModel.getUserById(email,listener);
+    }
+
+    public String getUserEmail(){
+        return firebaseModel.getUserEmail();
+    }
+
+    public void uploadImage(String name, Bitmap bitmap, Listener<String> listener) {
+        firebaseModel.uploadImage(name,bitmap,listener);
     }
 }
