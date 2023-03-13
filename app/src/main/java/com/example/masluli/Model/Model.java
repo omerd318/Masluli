@@ -66,28 +66,40 @@ public class Model {
         // get local last update
         Long localLastUpdate = Maslul.getLocalLastUpdate();
 
-        // TODO:get all updated recorde from firebase since local last update
-//        firebaseModel.getAllMaslulimSince(localLastUpdate,list->{
-//            executor.execute(()->{
-//                Log.d("TAG", " firebase return : " + list.size());
-//                Long time = localLastUpdate;
-//                for(Maslul ms:list){
-//                    // insert new records into ROOM
-//                    localDb.maslulDao().insertAll(st);
-//                    if (time < st.getLastUpdated()){
-//                        time = st.getLastUpdated();
-//                    }
-//                }
-//                try {
-//                    Thread.sleep(3000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                // update local last update
-//                Maslul.setLocalLastUpdate(time);
-//                EventMaslulimListLoadingState.postValue(MaslulimListLoadingState.NOT_LOADING);
-//            });
-//        });
+        // get all updated records from firebase since local last update
+        firebaseModel.getAllMaslulimSince(localLastUpdate,list->{
+            executor.execute(()->{
+                Log.d("TAG", " firebase return : " + list.size());
+                Long time = localLastUpdate;
+                for(Maslul maslul:list){
+                    // insert new records into ROOM
+                    if (maslul.getDeleted()) {
+                        localDb.maslulDao().delete(maslul);
+                    } else {
+                        localDb.maslulDao().insertAll(maslul);
+                    }
+
+                    if (time < maslul.getLastUpdated()){
+                        time = maslul.getLastUpdated();
+                    }
+                }
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // update local last update
+                Maslul.setLocalLastUpdate(time);
+                EventMaslulimListLoadingState.postValue(MaslulimListLoadingState.NOT_LOADING);
+            });
+        });
+    }
+
+    public void addMaslul(Maslul maslul, Listener<Void> listener){
+        firebaseModel.saveMaslul(maslul,(Void)->{
+            refreshAllMaslulim();
+            listener.onComplete(null);
+        });
     }
 
     public void register(String email, String password, Model.Listener<FirebaseUser> listener) {
