@@ -9,6 +9,7 @@ import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.masluli.R;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
@@ -21,6 +22,13 @@ public class Model {
         LOADING,
         NOT_LOADING
     }
+
+    public static final String[] areas = new String[]{
+            "Where am I form",
+            "North",
+            "Center",
+            "South"
+    };
 
     public static final Model instance = new Model();
     private FirebaseModel firebaseModel = new FirebaseModel();
@@ -92,6 +100,14 @@ public class Model {
 
     public void addUser(User user, Model.Listener<User> listener){
         firebaseModel.addUser(user, listener);
+    }
+
+    public void getUserById(String email, Model.Listener<User> listener) {
+        firebaseModel.getUserById(email,listener);
+    }
+
+    public String getUserEmail(){
+        return firebaseModel.getUserEmail();
     }
 
     public void uploadImage(String name, Bitmap bitmap, Listener<String> listener) {

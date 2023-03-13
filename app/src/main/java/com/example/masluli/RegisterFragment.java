@@ -1,5 +1,7 @@
 package com.example.masluli;
 
+import static com.example.masluli.Model.Model.areas;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -63,7 +65,6 @@ public class RegisterFragment extends Fragment {
             }
         });
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,15 +135,6 @@ public class RegisterFragment extends Fragment {
     }
 
     private void initSpinner(View view) {
-        Spinner spinner = view.findViewById(R.id.register_area_dd);
-
-        String[] areas = new String[]{
-                getResources().getString(R.string.area),
-                "North",
-                "Center",
-                "South"
-        };
-
         ArrayAdapter<String> spinnerArrayAdapter
                 = new ArrayAdapter<String>(
                 getActivity(),
@@ -170,7 +162,7 @@ public class RegisterFragment extends Fragment {
             }
         };
 
-        spinner.setOnItemSelectedListener(
+        binding.registerAreaDd.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
 
                     @Override
@@ -188,7 +180,7 @@ public class RegisterFragment extends Fragment {
                     }
                 });
 
-        spinner.setAdapter(spinnerArrayAdapter);
+        binding.registerAreaDd.setAdapter(spinnerArrayAdapter);
     }
 
     private void toMainScreen() {
