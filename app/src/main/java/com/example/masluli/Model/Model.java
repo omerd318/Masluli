@@ -98,6 +98,15 @@ public class Model {
         firebaseModel.login(email,password, listener);
     }
 
+    public boolean isSignedIn() {
+        return firebaseModel.isSignedIn();
+    }
+
+    public void signOut() {
+        EventMaslulimListLoadingState.postValue(null);
+        firebaseModel.signOut();
+    }
+
     public void addUser(User user, Model.Listener<User> listener){
         firebaseModel.addUser(user, listener);
     }

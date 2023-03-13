@@ -2,6 +2,7 @@ package com.example.masluli;
 
 import static com.example.masluli.Model.Model.areas;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -97,6 +98,12 @@ public class ProfileFragment extends Fragment {
 
         binding.profileGalleryBtn.setOnClickListener(view1->{
             galleryLauncher.launch("image/*");
+        });
+
+        // TODO: move to actionbar menu
+        binding.profileSignOutBtn.setOnClickListener(v -> {
+            Model.instance().signOut();
+            toLoginActivity();
         });
 
         binding.profileSaveBtn.setOnClickListener(v -> {
@@ -208,5 +215,12 @@ public class ProfileFragment extends Fragment {
             }
         }
         return -1;
+    }
+
+    // TODO: temp
+    private void toLoginActivity() {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

@@ -117,6 +117,17 @@
                 android:text="@string/save"
                 android:textColor="@color/masluli_text" />
 
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/profile_sign_out_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_marginTop="16dp"
+                android:text="@string/signout"
+                android:textColor="@color/masluli_text" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ProgressBar
