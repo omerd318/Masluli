@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.masluli.MyApplication;
 
-@Database(entities = {Maslul.class}, version = 80)
+@Database(entities = {Maslul.class}, version = 3)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract MaslulDao maslulDao();
 }

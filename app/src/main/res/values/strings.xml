@@ -16,4 +16,7 @@
     <string name="area">Where am I from</string>
     <string name="registerPage">Join Masluli</string>
     <string name="register"><u>Let`s start to travel!</u></string>
+    <string name="profilePage">My profile</string>
+    <string name="save">Save</string>
+    <string name="signout">Sign out</string>
 </resources>

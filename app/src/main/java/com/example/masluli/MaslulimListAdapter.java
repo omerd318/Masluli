@@ -34,6 +34,11 @@ class MaslulimListAdapter extends RecyclerView.Adapter<MaslulimListViewHolder>{
         this.data = data;
     }
 
+    public void setData(List<Maslul> data){
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public MaslulimListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -81,8 +86,8 @@ class MaslulimListViewHolder extends RecyclerView.ViewHolder{
     void bind(Maslul maslul, int pos){
         maslulNameTv.setText(maslul.getTitle());
         locationTv.setText(maslul.getLocation());
-        descTv.setText(maslul.getDescription());
-        userNameTv.setText(maslul.getUserId());
+        descTv.setText(maslul.getDifficulty().name() + ", " + maslul.getLength() + " Km");
+        userNameTv.setText(maslul.getUserId());  // TODO: get user name
         image.setImageResource(R.drawable.no_image);
         if (maslul.getImageUrl() != null && !maslul.getImageUrl().equals("")) {
             Picasso.get()

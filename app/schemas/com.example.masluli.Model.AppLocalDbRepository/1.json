@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 80,
-    "identityHash": "367d008dac75c2d21de02b1136bcd960",
+    "version": 1,
+    "identityHash": "134dedc6dbfb24e8e67bcf4236a72448",
     "entities": [
       {
         "tableName": "Maslul",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `title` TEXT, `location` TEXT, `length` INTEGER, `difficulty` TEXT, `isAccessible` INTEGER, `isWater` INTEGER, `isRounded` INTEGER, `description` TEXT, `userId` TEXT, `imageUrl` TEXT, `lastUpdated` INTEGER, `isDeleted` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `title` TEXT, `location` TEXT, `length` INTEGER NOT NULL, `difficulty` TEXT, `isAccessible` INTEGER, `isWater` INTEGER, `isRounded` INTEGER, `description` TEXT, `userId` TEXT, `imageUrl` TEXT, `lastUpdated` INTEGER, `isDeleted` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -30,7 +30,7 @@
             "fieldPath": "length",
             "columnName": "length",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "difficulty",
@@ -100,7 +100,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '367d008dac75c2d21de02b1136bcd960')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '134dedc6dbfb24e8e67bcf4236a72448')"
     ]
   }
 }

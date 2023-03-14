@@ -55,6 +55,20 @@ public class MaslulimFragment extends Fragment {
 
         });
 
+        binding.progressBar.setVisibility(View.GONE);
+
+        viewModel.getData().observe(getViewLifecycleOwner(),list->{
+            adapter.setData(list);
+        });
+
+        Model.instance().EventMaslulimListLoadingState.observe(getViewLifecycleOwner(),status->{
+            binding.maslulimListRvSwipeRefresh.setRefreshing(status == Model.MaslulimListLoadingState.LOADING);
+        });
+
+        binding.maslulimListRvSwipeRefresh.setOnRefreshListener(()->{
+            reloadData();
+        });
+
         return view;
     }
 
@@ -66,7 +80,8 @@ public class MaslulimFragment extends Fragment {
     }
 
     void reloadData(){
-        Model.instance.refreshAllMaslulim();
+//        binding.progressBar.setVisibility(View.VISIBLE);
+        Model.instance().refreshAllMaslulim();
     }
 
 }
