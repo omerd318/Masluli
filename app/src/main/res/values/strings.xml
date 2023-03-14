@@ -6,6 +6,7 @@
     <string name="routeLocation">Location?</string>
     <string name="routeLength">Length</string>
     <string name="routeDiffLvl">Difficulty level is...</string>
+    <string name="routeDescription">How was your Maslul?</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login"><u>Let`s travel!</u></string>

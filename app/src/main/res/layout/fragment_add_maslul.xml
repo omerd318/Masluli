@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRouteFragment">
+    tools:context=".AddMaslulFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,11 +13,12 @@
         android:padding="10dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/add_path_name_et"
+            android:id="@+id/add_maslul_name_et"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:hint="@string/routeName"
             android:textColorHint="@color/masluli_green"
             app:boxBackgroundColor="@color/masluli_cards"
@@ -33,11 +34,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/add_path_location_et"
+            android:id="@+id/add_maslul_location_et"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:hint="@string/routeLocation"
             android:textColorHint="@color/masluli_green"
             app:boxBackgroundColor="@color/masluli_cards"
@@ -57,14 +59,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_path_length_et"
+                android:id="@+id/add_maslul_length_et"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:hint="@string/routeLength"
                 android:textColorHint="@color/masluli_green"
                 app:boxBackgroundColor="@color/masluli_cards"
@@ -80,11 +84,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_path_diff_lvl_et"
+                android:id="@+id/add_maslul_diff_lvl_et"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:hint="@string/routeDiffLvl"
                 android:textColorHint="@color/masluli_green"
                 app:boxBackgroundColor="@color/masluli_cards"
@@ -103,42 +108,43 @@
 
         </LinearLayout>
 
-<!--        <com.google.android.material.button.MaterialButtonToggleGroup-->
-<!--            android:id="@+id/toggleButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content">-->
+        <!--        <com.google.android.material.button.MaterialButtonToggleGroup-->
+        <!--            android:id="@+id/toggleButton"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content">-->
 
-<!--            <Button-->
-<!--                android:id="@+id/button1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Button 1"-->
-<!--                style="?attr/materialButtonOutlinedStyle"-->
-<!--                />-->
-<!--            <Button-->
-<!--                android:id="@+id/button2"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Button 2"-->
-<!--                style="?attr/materialButtonOutlinedStyle"-->
-<!--                />-->
-<!--            <Button-->
-<!--                android:id="@+id/button3"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Button 3"-->
-<!--                style="?attr/materialButtonOutlinedStyle"-->
-<!--                />-->
-<!--        </com.google.android.material.button.MaterialButtonToggleGroup>-->
+        <!--            <Button-->
+        <!--                android:id="@+id/button1"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="Button 1"-->
+        <!--                style="?attr/materialButtonOutlinedStyle"-->
+        <!--                />-->
+        <!--            <Button-->
+        <!--                android:id="@+id/button2"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="Button 2"-->
+        <!--                style="?attr/materialButtonOutlinedStyle"-->
+        <!--                />-->
+        <!--            <Button-->
+        <!--                android:id="@+id/button3"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="Button 3"-->
+        <!--                style="?attr/materialButtonOutlinedStyle"-->
+        <!--                />-->
+        <!--        </com.google.android.material.button.MaterialButtonToggleGroup>-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center|center_vertical"
             android:orientation="horizontal">
 
             <ToggleButton
-                android:id="@+id/add_path_accessible_toggle_btn"
+                android:id="@+id/add_maslul_accessible_toggle_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -151,7 +157,7 @@
                 android:textOn="Accessible" />
 
             <ToggleButton
-                android:id="@+id/add_path_water_toggle_btn"
+                android:id="@+id/add_maslul_water_toggle_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -163,7 +169,7 @@
                 android:textOn="Water" />
 
             <ToggleButton
-                android:id="@+id/add_path_round_toggle_btn"
+                android:id="@+id/add_maslul_round_toggle_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -174,6 +180,83 @@
                 android:textOff="Not rounded"
                 android:textOn="Rounded" />
         </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_maslul_description_et"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="@string/routeDescription"
+            android:textColorHint="@color/masluli_green"
+            app:boxBackgroundColor="@color/masluli_cards"
+            app:boxStrokeColor="@color/masluli_green"
+            app:boxStrokeWidth="0dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="325dp"
+                android:elegantTextHeight="false"
+                android:inputType="textLongMessage"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rate the maslul"
+                android:textColor="@color/masluli_green"
+                android:textSize="18sp" />
+
+            <RatingBar
+                android:id="@+id/add_maslul_rating_bar"
+                style="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="4"
+                android:stepSize="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Add Image"
+                android:textColor="@color/masluli_green"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/add_maslul_photo_btn"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_add" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_maslul_add_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Submit" />
 
     </LinearLayout>
 </ScrollView>

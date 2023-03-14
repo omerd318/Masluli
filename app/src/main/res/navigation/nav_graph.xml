@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_maslulim" />
     <fragment
         android:id="@+id/addRouteFragment"
-        android:name="com.example.masluli.AddRouteFragment"
+        android:name="com.example.masluli.AddMaslulFragment"
         android:label="fragment_add_route"
-        tools:layout="@layout/fragment_add_route" />
+        tools:layout="@layout/fragment_add_maslul" />
 </navigation>
