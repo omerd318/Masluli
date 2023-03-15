@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -54,6 +55,10 @@ public class MaslulimFragment extends Fragment {
 //                    actionAllDonationsListToDonationDetailsFragment(donationId));
 
         });
+
+        View addButton = view.findViewById(R.id.maslulimList_add_btn);
+        NavDirections action = MaslulimFragmentDirections.actionGlobalAddMaslulFragment();
+        addButton.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 
         binding.progressBar.setVisibility(View.GONE);
 

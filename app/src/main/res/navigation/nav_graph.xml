@@ -21,8 +21,9 @@
         android:label="Masluli"
         tools:layout="@layout/fragment_maslulim" />
     <fragment
-        android:id="@+id/addRouteFragment"
+        android:id="@+id/addMaslulFragment"
         android:name="com.example.masluli.AddMaslulFragment"
-        android:label="fragment_add_route"
+        android:label="Add Maslul"
         tools:layout="@layout/fragment_add_maslul" />
+    <action android:id="@+id/action_global_addMaslulFragment" app:destination="@id/addMaslulFragment" />
 </navigation>
