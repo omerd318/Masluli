@@ -4,10 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,7 +25,7 @@ import com.example.masluli.databinding.FragmentMaslulimBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyMaslulimFragment#newInstance} factory method to
+ * Use the {@link MyMaslulimFragment} factory method to
  * create an instance of this fragment.
  */
 public class MyMaslulimFragment extends Fragment {
@@ -29,6 +37,20 @@ public class MyMaslulimFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FragmentActivity parentActivity = getActivity();
+        parentActivity.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menu.findItem(R.id.menu_my_maslulim).setVisible(false);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        },this, Lifecycle.State.RESUMED);
+
     }
 
     @Override

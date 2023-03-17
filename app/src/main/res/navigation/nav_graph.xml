@@ -18,7 +18,8 @@
         android:id="@+id/profileFragment"
         android:name="com.example.masluli.ProfileFragment"
         android:label="My Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+    </fragment>
     <fragment
         android:id="@+id/maslulimFragment"
         android:name="com.example.masluli.MaslulimFragment"

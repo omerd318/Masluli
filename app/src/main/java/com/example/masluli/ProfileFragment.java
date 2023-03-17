@@ -2,7 +2,6 @@ package com.example.masluli;
 
 import static com.example.masluli.Model.Model.areas;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,22 +14,19 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
+import androidx.navigation.NavController;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.masluli.Model.Model;
 import com.example.masluli.Model.User;
 import com.example.masluli.databinding.FragmentProfileBinding;
-import com.example.masluli.databinding.FragmentRegisterBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -43,12 +39,11 @@ public class ProfileFragment extends Fragment {
     ActivityResultLauncher<String> galleryLauncher;
     Boolean isAvatarSelected = false;
     String initialUserUrl = "";
-
+    NavController navController;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(), new ActivityResultCallback<Bitmap>() {
             @Override
             public void onActivityResult(Bitmap result) {
@@ -84,7 +79,6 @@ public class ProfileFragment extends Fragment {
             binding.profileEmailEt.setEnabled(false);
             binding.profileNameEt.setText(user.getName());
             binding.profileAreaDd.setSelection(findIndexOf(user.getArea()));
-//            binding.profileAreaDd.setSelection(1);
             binding.profileAgeEt.setText(user.getAge());
             if (user.getImageUrl() != null && !user.getImageUrl().equals("")) {
                 initialUserUrl = user.getImageUrl();
@@ -100,18 +94,6 @@ public class ProfileFragment extends Fragment {
 
         binding.profileGalleryBtn.setOnClickListener(view1->{
             galleryLauncher.launch("image/*");
-        });
-
-        // TODO: move to actionbar menu
-        binding.profileSignOutBtn.setOnClickListener(v -> {
-            Model.instance().signOut();
-            toLoginActivity();
-        });
-
-        // TODO: move to actionbar menu
-        binding.profileMyMaslulimBtn.setOnClickListener(v -> {
-            NavDirections action = MyMaslulimFragmentDirections.actionGlobalMyMaslulimFragment();
-            Navigation.findNavController(v).navigate(action);
         });
 
         binding.profileSaveBtn.setOnClickListener(v -> {
@@ -223,12 +205,5 @@ public class ProfileFragment extends Fragment {
             }
         }
         return -1;
-    }
-
-    // TODO: temp
-    private void toLoginActivity() {
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
-        getActivity().finish();
     }
 }
