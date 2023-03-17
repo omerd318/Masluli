@@ -2,7 +2,6 @@ package com.example.masluli;
 
 import static com.example.masluli.Model.Model.areas;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,32 +13,20 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Lifecycle;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.masluli.Model.Model;
 import com.example.masluli.Model.User;
 import com.example.masluli.databinding.FragmentProfileBinding;
-import com.example.masluli.databinding.FragmentRegisterBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -52,28 +39,11 @@ public class ProfileFragment extends Fragment {
     ActivityResultLauncher<String> galleryLauncher;
     Boolean isAvatarSelected = false;
     String initialUserUrl = "";
+    NavController navController;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        FragmentActivity parentActivity = getActivity();
-        parentActivity.addMenuProvider(new MenuProvider() {
-            @Override
-            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-                menu.findItem(R.id.menu_my_maslulim).setVisible(true);
-            }
-
-            @Override
-            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.menu_my_maslulim) {
-                    // TODO: Navigate to my-maslulim fragment
-                }
-
-                return false;
-            }
-        },this, Lifecycle.State.RESUMED);
-
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(), new ActivityResultCallback<Bitmap>() {
             @Override
             public void onActivityResult(Bitmap result) {
@@ -109,7 +79,6 @@ public class ProfileFragment extends Fragment {
             binding.profileEmailEt.setEnabled(false);
             binding.profileNameEt.setText(user.getName());
             binding.profileAreaDd.setSelection(findIndexOf(user.getArea()));
-//            binding.profileAreaDd.setSelection(1);
             binding.profileAgeEt.setText(user.getAge());
             if (user.getImageUrl() != null && !user.getImageUrl().equals("")) {
                 initialUserUrl = user.getImageUrl();

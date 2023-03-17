@@ -11,6 +11,6 @@
         android:id="@+id/menu_my_maslulim"
         android:icon="@drawable/no_image_maslul"
         android:title="@string/myMaslulim"
-        android:visible="false"
+        android:visible="true"
         app:showAsAction="withText" />
 </menu>

@@ -117,7 +117,6 @@
                 android:text="@string/save"
                 android:textColor="@color/masluli_text" />
 
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ProgressBar
