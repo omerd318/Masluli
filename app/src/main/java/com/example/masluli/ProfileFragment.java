@@ -15,6 +15,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,6 +106,12 @@ public class ProfileFragment extends Fragment {
         binding.profileSignOutBtn.setOnClickListener(v -> {
             Model.instance().signOut();
             toLoginActivity();
+        });
+
+        // TODO: move to actionbar menu
+        binding.profileMyMaslulimBtn.setOnClickListener(v -> {
+            NavDirections action = MyMaslulimFragmentDirections.actionGlobalMyMaslulimFragment();
+            Navigation.findNavController(v).navigate(action);
         });
 
         binding.profileSaveBtn.setOnClickListener(v -> {

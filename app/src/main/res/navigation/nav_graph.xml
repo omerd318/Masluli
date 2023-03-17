@@ -28,4 +28,10 @@
             android:name="maslul"
             app:argType="com.example.masluli.Model.Maslul"/>
     </fragment>
+    <fragment
+        android:id="@+id/myMaslulimFragment"
+        android:name="com.example.masluli.MyMaslulimFragment"
+        android:label="My Maslulim"
+        tools:layout="@layout/fragment_my_maslulim" />
+    <action android:id="@+id/action_global_myMaslulimFragment" app:destination="@id/myMaslulimFragment" />
 </navigation>

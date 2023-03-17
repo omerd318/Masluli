@@ -57,8 +57,15 @@ public class Model {
             allMaslulimList = localDb.maslulDao().getAll();
             refreshAllMaslulim();
         }
-        List<Maslul> lisss = allMaslulimList.getValue();
         return allMaslulimList;
+    }
+
+    public LiveData<List<Maslul>> getMyMaslulim() {
+        if(myMaslulimList == null){
+            myMaslulimList = localDb.maslulDao().getMyMaslulim(getUserEmail());
+            refreshAllMaslulim();
+        }
+        return myMaslulimList;
     }
 
     public void refreshAllMaslulim(){
