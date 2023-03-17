@@ -14,9 +14,20 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,10 +53,26 @@ public class ProfileFragment extends Fragment {
     Boolean isAvatarSelected = false;
     String initialUserUrl = "";
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FragmentActivity parentActivity = getActivity();
+        parentActivity.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menu.findItem(R.id.menu_my_maslulim).setVisible(true);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.menu_my_maslulim) {
+                    // TODO: Navigate to my-maslulim fragment
+                }
+
+                return false;
+            }
+        },this, Lifecycle.State.RESUMED);
 
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(), new ActivityResultCallback<Bitmap>() {
             @Override
@@ -98,12 +125,6 @@ public class ProfileFragment extends Fragment {
 
         binding.profileGalleryBtn.setOnClickListener(view1->{
             galleryLauncher.launch("image/*");
-        });
-
-        // TODO: move to actionbar menu
-        binding.profileSignOutBtn.setOnClickListener(v -> {
-            Model.instance().signOut();
-            toLoginActivity();
         });
 
         binding.profileSaveBtn.setOnClickListener(v -> {
@@ -215,12 +236,5 @@ public class ProfileFragment extends Fragment {
             }
         }
         return -1;
-    }
-
-    // TODO: temp
-    private void toLoginActivity() {
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
-        getActivity().finish();
     }
 }

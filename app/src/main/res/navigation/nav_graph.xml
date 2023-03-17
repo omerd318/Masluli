@@ -14,7 +14,12 @@
         android:id="@+id/profileFragment"
         android:name="com.example.masluli.ProfileFragment"
         android:label="My Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+<!--TODO: Delete when my-maslulim route is added-->
+        <action
+            android:id="@+id/action_profileFragment_to_maslulimFragment"
+            app:destination="@id/maslulimFragment" />
+    </fragment>
     <fragment
         android:id="@+id/maslulimFragment"
         android:name="com.example.masluli.MaslulimFragment"
