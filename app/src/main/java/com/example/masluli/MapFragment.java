@@ -4,9 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -14,10 +12,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -43,7 +39,6 @@ import java.util.List;
 public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleMap.OnInfoWindowClickListener{
 
     private static final int DEFAULT_ZOOM = 13;
-    private boolean locationPermissionGranted;
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
@@ -79,7 +74,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
                 } else {
                     map.setMyLocationEnabled(false);
                 }
-                updateLocationUI();
             }
         });
     }
@@ -192,9 +186,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
             map.setMyLocationEnabled(true);
             Log.d("TAG", "location permission granted");
         } else {
-//            ActivityCompat.requestPermissions(getActivity(),
-//                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-//                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             Log.d("TAG", "location permission not granted, requesting permission");
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
@@ -209,12 +200,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
         }
         try {
             if (map.isMyLocationEnabled()) {
-//                map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
-//                map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
-                lastKnownLocation = null;
                 getLocationPermission();
             }
         } catch (SecurityException e)  {
@@ -242,14 +230,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
 
     @Override
     public void onInfoWindowClick(@NonNull Marker marker) {
-        Maslul maslul = (Maslul) marker.getTag();
-        MapFragmentDirections.ActionMapFragmentToViewMaslulFragment action = MapFragmentDirections.actionMapFragmentToViewMaslulFragment(maslul);
-        Navigation.findNavController(view).navigate(action);
+        Object tag = marker.getTag();
+        if(tag != null) {
+            Maslul maslul = (Maslul) tag;
+            MapFragmentDirections.ActionMapFragmentToViewMaslulFragment action = MapFragmentDirections.actionMapFragmentToViewMaslulFragment(maslul);
+            Navigation.findNavController(view).navigate(action);
+        }
     }
-
-//    @Override
-//    public boolean onMarkerClick(@NonNull Marker marker) {
-//
-//        return false;
-//    }
 }
