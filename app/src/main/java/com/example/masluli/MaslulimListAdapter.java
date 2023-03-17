@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.masluli.Model.Maslul;
+import com.example.masluli.Model.Model;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -87,7 +88,9 @@ class MaslulimListViewHolder extends RecyclerView.ViewHolder{
         maslulNameTv.setText(maslul.getTitle());
         locationTv.setText(maslul.getLocation());
         descTv.setText(maslul.getDifficulty().name() + ", " + maslul.getLength() + " Km");
-        userNameTv.setText(maslul.getUserId());  // TODO: get user name
+        Model.instance().getUserById(maslul.getUserId(), user -> {
+            userNameTv.setText(user.getName());
+        });
         image.setImageResource(R.drawable.no_image_maslul);
         if (maslul.getImageUrl() != null && !maslul.getImageUrl().equals("")) {
             Picasso.get()

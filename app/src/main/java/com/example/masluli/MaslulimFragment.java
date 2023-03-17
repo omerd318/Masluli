@@ -80,7 +80,7 @@ public class MaslulimFragment extends Fragment {
     }
 
     void reloadData(){
-//        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.progressBar.setVisibility(View.VISIBLE);
         Model.instance().refreshAllMaslulim();
     }
 

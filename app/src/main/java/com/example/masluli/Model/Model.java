@@ -104,6 +104,7 @@ public class Model {
     }
 
     public void addMaslul(Maslul maslul, Listener<Void> listener){
+        maslul.setUserId(getUserEmail());
         firebaseModel.saveMaslul(maslul,(Void)->{
             refreshAllMaslulim();
             listener.onComplete(null);
