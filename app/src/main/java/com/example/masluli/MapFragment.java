@@ -1,15 +1,19 @@
 package com.example.masluli;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -35,8 +39,6 @@ import java.util.List;
 public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleMap.OnInfoWindowClickListener{
 
     private static final int DEFAULT_ZOOM = 13;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private boolean locationPermissionGranted;
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
@@ -53,6 +55,28 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
 
     MaslulimListViewModel viewModel;
     View view;
+    ActivityResultLauncher<String> requestPermissionLauncher;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Register the permissions callback, which handles the user's response to the
+        // system permissions dialog.
+        requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onActivityResult(Boolean isGranted) {
+                if(isGranted) {
+                    map.setMyLocationEnabled(true);
+                    getDeviceLocation();
+
+                } else {
+                    map.setMyLocationEnabled(false);
+                }
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,8 +144,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
          * cases when a location is not available.
          */
         try {
-            if (locationPermissionGranted) {
-                Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
+            if (map.isMyLocationEnabled()) {
+                @SuppressLint("MissingPermission") Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(getActivity(), new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
@@ -150,40 +174,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
     /**
      * Prompts the user for permission to use the device location.
      */
+    @SuppressLint("MissingPermission")
     private void getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
+         * device. The registered ActivityResultCallback gets the result of this request.
          */
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            locationPermissionGranted = true;
+            map.setMyLocationEnabled(true);
             Log.d("TAG", "location permission granted");
         } else {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            Log.d("TAG", "location permission not granted");
+            Log.d("TAG", "location permission not granted, requesting permission");
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        locationPermissionGranted = false;
-        if (requestCode
-                == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {// If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                locationPermissionGranted = true;
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-        updateLocationUI();
     }
 
     /**
@@ -194,13 +199,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
             return;
         }
         try {
-            if (locationPermissionGranted) {
-                map.setMyLocationEnabled(true);
+            if (map.isMyLocationEnabled()) {
                 map.getUiSettings().setMyLocationButtonEnabled(true);
             } else {
-                map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
-                lastKnownLocation = null;
                 getLocationPermission();
             }
         } catch (SecurityException e)  {
@@ -223,20 +225,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-//        viewModel = new ViewModelProvider(this).get(MaslulimListViewModel.class);
         viewModel = new MaslulimListViewModel(MaslulimListViewModel.ListMode.AllMaslulim);
     }
 
     @Override
     public void onInfoWindowClick(@NonNull Marker marker) {
-        Maslul maslul = (Maslul) marker.getTag();
-        MapFragmentDirections.ActionMapFragmentToViewMaslulFragment action = MapFragmentDirections.actionMapFragmentToViewMaslulFragment(maslul);
-        Navigation.findNavController(view).navigate(action);
+        Object tag = marker.getTag();
+        if(tag != null) {
+            Maslul maslul = (Maslul) tag;
+            MapFragmentDirections.ActionMapFragmentToViewMaslulFragment action = MapFragmentDirections.actionMapFragmentToViewMaslulFragment(maslul);
+            Navigation.findNavController(view).navigate(action);
+        }
     }
-
-//    @Override
-//    public boolean onMarkerClick(@NonNull Marker marker) {
-//
-//        return false;
-//    }
 }

@@ -4,14 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Lifecycle;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,10 +25,10 @@ import com.example.masluli.databinding.FragmentMaslulimBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MaslulimFragment} factory method to
+ * Use the {@link MyMaslulimFragment} factory method to
  * create an instance of this fragment.
  */
-public class MaslulimFragment extends Fragment {
+public class MyMaslulimFragment extends Fragment {
 
     FragmentMaslulimBinding binding;
     MaslulimListAdapter adapter;
@@ -33,6 +37,20 @@ public class MaslulimFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FragmentActivity parentActivity = getActivity();
+        parentActivity.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menu.findItem(R.id.menu_my_maslulim).setVisible(false);
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                return false;
+            }
+        },this, Lifecycle.State.RESUMED);
+
     }
 
     @Override
@@ -51,14 +69,10 @@ public class MaslulimFragment extends Fragment {
         adapter.setOnItemClickListener((v, position) -> {
             Maslul maslul = viewModel.getData().getValue().get(position);
             // TODO: navigate to view maslul screen
-//            Navigation.findNavController(v).navigate(AllDonationsListDirections.
-//                    actionAllDonationsListToDonationDetailsFragment(donationId));
+//            Navigation.findNavController(v).navigate(MyMaslulimListDirections.
+//                    actionMyMaslulimListToViewMAslulFragment(maslul));
 
         });
-
-        View addButton = view.findViewById(R.id.maslulimList_add_btn);
-        NavDirections action = MaslulimFragmentDirections.actionGlobalAddMaslulFragment();
-        addButton.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 
         binding.progressBar.setVisibility(View.GONE);
 
@@ -66,7 +80,7 @@ public class MaslulimFragment extends Fragment {
             adapter.setData(list);
         });
 
-        Model.instance().EventMaslulimListLoadingState.observe(getViewLifecycleOwner(),status->{
+        Model.instance().EventMaslulimListLoadingState.observe(getViewLifecycleOwner(), status->{
             binding.maslulimListRvSwipeRefresh.setRefreshing(status == Model.MaslulimListLoadingState.LOADING);
         });
 
@@ -80,8 +94,7 @@ public class MaslulimFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-//        viewModel = new ViewModelProvider(this).get(MaslulimListViewModel.class);
-        viewModel = new MaslulimListViewModel(MaslulimListViewModel.ListMode.AllMaslulim);
+        viewModel = new MaslulimListViewModel(MaslulimListViewModel.ListMode.MyMaslulim);
     }
 
     void reloadData(){

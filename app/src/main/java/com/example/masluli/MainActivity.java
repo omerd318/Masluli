@@ -3,6 +3,8 @@ package com.example.masluli;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
             navController.popBackStack();
         } else if(item.getItemId() == R.id.menu_logout) {
             signOut();
+        } else if(item.getItemId() == R.id.menu_my_maslulim) {
+            NavDirections action = MyMaslulimFragmentDirections.actionGlobalMyMaslulimFragment();
+            navController.navigate(action);
         }
 
         return super.onOptionsItemSelected(item);

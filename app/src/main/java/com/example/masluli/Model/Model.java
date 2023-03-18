@@ -57,8 +57,15 @@ public class Model {
             allMaslulimList = localDb.maslulDao().getAll();
             refreshAllMaslulim();
         }
-        List<Maslul> lisss = allMaslulimList.getValue();
         return allMaslulimList;
+    }
+
+    public LiveData<List<Maslul>> getMyMaslulim() {
+        if(myMaslulimList == null){
+            myMaslulimList = localDb.maslulDao().getMyMaslulim(getUserEmail());
+            refreshAllMaslulim();
+        }
+        return myMaslulimList;
     }
 
     public void refreshAllMaslulim(){
@@ -97,6 +104,7 @@ public class Model {
     }
 
     public void addMaslul(Maslul maslul, Listener<Void> listener){
+        maslul.setUserId(getUserEmail());
         firebaseModel.saveMaslul(maslul,(Void)->{
             refreshAllMaslulim();
             listener.onComplete(null);
