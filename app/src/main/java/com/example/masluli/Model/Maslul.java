@@ -8,14 +8,17 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.example.masluli.MyApplication;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.GeoPoint;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class Maslul {
+public class Maslul implements Serializable {
     public static final String COLLECTION_NAME = "maslulim";
     public static final String LAST_UPDATED = "lastUpdated";
     public static final String LOCAL_LAST_UPDATED = "maslulim_local_last_update";
@@ -34,9 +37,10 @@ public class Maslul {
     String userId;
     String imageUrl;
     Long lastUpdated;  // on firebase
+    GeoPoint latlng;
     Boolean isDeleted;
 
-    public Maslul(@NonNull String id, String title, String location, int length, Difficulty dif, Boolean isAccessible, Boolean isWater, Boolean isRounded, String description, String userId) {
+    public Maslul(@NonNull String id, String title, String location, int length, Difficulty dif, Boolean isAccessible, Boolean isWater, Boolean isRounded, String description, String userId, GeoPoint latlng) {
         this.id = id;
         this.title = title;
         this.location = location;
@@ -47,6 +51,10 @@ public class Maslul {
         this.isRounded = isRounded;
         this.description = description;
         this.userId = userId;
+        this.latlng = null;
+        if(latlng != null) {
+            this.latlng = new GeoPoint(latlng.getLatitude(), latlng.getLongitude());
+        }
         this.isDeleted = false;
     }
 
@@ -62,6 +70,7 @@ public class Maslul {
         this.description = "";
         this.userId = "";
         this.lastUpdated = new Long(0);
+        this.latlng = new GeoPoint(0,0);
         this.isDeleted = false;
     }
 
@@ -88,19 +97,19 @@ public class Maslul {
         String location = (String) maslulJson.get("location");
         int length = ((Long) maslulJson.get("length")).intValue();
         Difficulty difficulty = Difficulty.valueOf((String) maslulJson.get("difficulty"));
-//        Difficulty difficulty = Difficulty.valueOf("Easy");
         Boolean isAccessible = (Boolean) maslulJson.get("isAccessible");
         Boolean isWater = (Boolean) maslulJson.get("isWater");
         Boolean isRounded = (Boolean) maslulJson.get("isRounded");
         String description = (String) maslulJson.get("description");
         String userId = (String) maslulJson.get("userId");
         String imageUrl = (String) maslulJson.get("imageUrl");
+        GeoPoint latLng = (GeoPoint) maslulJson.get("latlng");
         Boolean isDeleted = (Boolean) maslulJson.get("isDeleted");
 
         Timestamp timestamp = (Timestamp) maslulJson.get(LAST_UPDATED);
         Long lastUpdated = timestamp.getSeconds();
 
-        Maslul maslulItem = new Maslul(docId, title, location, length, difficulty, isAccessible, isWater, isRounded, description, userId);
+        Maslul maslulItem = new Maslul(docId, title, location, length, difficulty, isAccessible, isWater, isRounded, description, userId, latLng);
 
         maslulItem.setLastUpdated(lastUpdated);
         maslulItem.setImageUrl(imageUrl);
@@ -122,6 +131,7 @@ public class Maslul {
         json.put("description", description);
         json.put("userId", userId);
         json.put("imageUrl", imageUrl);
+        json.put("latlng", latlng);
         json.put("isDeleted", isDeleted);
 
         json.put(LAST_UPDATED, FieldValue.serverTimestamp());
@@ -223,6 +233,18 @@ public class Maslul {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public double getLatitude() {
+        return latlng != null ? latlng.getLatitude() : 0;
+    }
+
+    public double getLongitude() {
+        return latlng != null ? latlng.getLongitude() : 0;
+    }
+
+    public void setLatlng(double lat, double lng) {
+        this.latlng = new GeoPoint(lat, lng);
     }
 
     public Long getLastUpdated() {

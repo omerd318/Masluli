@@ -57,6 +57,7 @@ public class Model {
             allMaslulimList = localDb.maslulDao().getAll();
             refreshAllMaslulim();
         }
+        List<Maslul> lisss = allMaslulimList.getValue();
         return allMaslulimList;
     }
 

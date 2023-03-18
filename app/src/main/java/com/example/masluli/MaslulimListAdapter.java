@@ -88,7 +88,7 @@ class MaslulimListViewHolder extends RecyclerView.ViewHolder{
         locationTv.setText(maslul.getLocation());
         descTv.setText(maslul.getDifficulty().name() + ", " + maslul.getLength() + " Km");
         userNameTv.setText(maslul.getUserId());  // TODO: get user name
-        image.setImageResource(R.drawable.no_image);
+        image.setImageResource(R.drawable.no_image_maslul);
         if (maslul.getImageUrl() != null && !maslul.getImageUrl().equals("")) {
             Picasso.get()
                     .load(maslul.getImageUrl())
