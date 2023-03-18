@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.masluli.Model.Model;
 import com.example.masluli.databinding.FragmentMaslulDetailsBinding;
 
 public class MaslulDetailsFragment extends Fragment {
@@ -33,6 +34,10 @@ public class MaslulDetailsFragment extends Fragment {
         binding = FragmentMaslulDetailsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         Log.d("TAG", "maslul id: " + maslulId);
+
+        Model.instance().getMaslulById(maslulId, (maslul) -> {
+            // TODO: show maslul details
+        });
         return view;
     }
 }
