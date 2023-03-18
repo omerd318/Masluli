@@ -4,7 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="routeName">Route Name is...</string>
     <string name="routeLocation">Location?</string>
-    <string name="routeLength">Length</string>
+    <string name="routeLength">Length in KM</string>
     <string name="routeDiffLvl">Difficulty level is...</string>
     <string name="routeDescription">How was your Maslul?</string>
     <string name="email">Email</string>
@@ -20,4 +20,17 @@
     <string name="save">Save</string>
     <string name="signout">Sign out</string>
     <string name="myMaslulim">My Maslulim</string>
+    <string name="routeRating">Rate this maslul</string>
+    <string name="routeImage">Maslul image</string>
+    <string-array name="locations_array">
+        <item>South</item>
+        <item>East</item>
+        <item>West</item>
+        <item>North</item>
+    </string-array>
+    <string-array name="difficulties_array">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
 </resources>

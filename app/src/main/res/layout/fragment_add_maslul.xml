@@ -6,17 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".AddMaslulFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/add_maslul_name_et"
+            android:id="@+id/add_maslul_name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:gravity="center"
             android:hint="@string/routeName"
@@ -24,9 +25,13 @@
             app:boxBackgroundColor="@color/masluli_cards"
             app:boxStrokeColor="@color/masluli_green"
             app:boxStrokeWidth="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_maslul_name_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textShortMessage"
@@ -34,10 +39,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/add_maslul_location_et"
+            android:id="@+id/add_maslul_location"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:hint="@string/routeLocation"
@@ -45,10 +50,13 @@
             app:boxBackgroundColor="@color/masluli_cards"
             app:boxStrokeColor="@color/masluli_green"
             app:boxStrokeWidth="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_maslul_name"
             app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full">
 
             <AutoCompleteTextView
-                android:id="@+id/add_path_location_ac"
+                android:id="@+id/add_maslul_location_ac"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none" />
@@ -56,14 +64,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
+            android:id="@+id/add_maslul_route_data_ll"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_maslul_location">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_maslul_length_et"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -77,14 +88,14 @@
                 app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_maslul_length_et"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="textShortMessage"
+                    android:inputType="number"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/add_maslul_diff_lvl_et"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -99,21 +110,25 @@
                 app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full">
 
                 <AutoCompleteTextView
-                    android:id="@+id/add_path_diff_lvl_ac"
+                    android:id="@+id/add_maslul_diff_lvl_ac"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/add_maslul_toggle_ll"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:gravity="center|center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_maslul_route_data_ll">
 
             <ToggleButton
                 android:id="@+id/add_maslul_accessible_toggle_btn"
@@ -126,7 +141,8 @@
                 android:textColor="@color/masluli_green"
                 android:textColorLink="@color/masluli_green"
                 android:textOff="Not Accessible"
-                android:textOn="Accessible" />
+                android:textOn="Accessible"
+                android:textSize="14sp" />
 
             <ToggleButton
                 android:id="@+id/add_maslul_water_toggle_btn"
@@ -138,7 +154,8 @@
                 android:textColor="@color/masluli_green"
                 android:textColorLink="@color/masluli_green"
                 android:textOff="No water"
-                android:textOn="Water" />
+                android:textOn="Water"
+                android:textSize="14sp" />
 
             <ToggleButton
                 android:id="@+id/add_maslul_round_toggle_btn"
@@ -150,23 +167,29 @@
                 android:textColor="@color/masluli_green"
                 android:textColorLink="@color/masluli_green"
                 android:textOff="Not rounded"
-                android:textOn="Rounded" />
+                android:textOn="Rounded"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/add_maslul_description_et"
+            android:id="@+id/add_maslul_description"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="280dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:gravity="center"
             android:hint="@string/routeDescription"
             android:textColorHint="@color/masluli_green"
             app:boxBackgroundColor="@color/masluli_cards"
             app:boxStrokeColor="@color/masluli_green"
-            app:boxStrokeWidth="0dp">
+            app:boxStrokeWidth="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_maslul_toggle_ll">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_maslul_description_et"
                 android:layout_width="match_parent"
                 android:layout_height="325dp"
                 android:elegantTextHeight="false"
@@ -175,19 +198,25 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
+            android:id="@+id/add_maslul_rating_ll"
             android:layout_width="match_parent"
-            android:layout_height="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_maslul_description">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/add_maslul_rating_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Rate the maslul"
+                android:text="@string/routeRating"
                 android:textColor="@color/masluli_green"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RatingBar
                 android:id="@+id/add_maslul_rating_bar"
@@ -195,40 +224,58 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
-                android:rating="4"
                 android:stepSize="1" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/add_maslul_photo_ll"
             android:layout_width="match_parent"
-            android:layout_height="28dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_maslul_rating_ll">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/add_maslul_img_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Add Image"
+                android:text="@string/routeImage"
                 android:textColor="@color/masluli_green"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <ImageButton
-                android:id="@+id/add_maslul_photo_btn"
+                android:id="@+id/add_maslul_gallery_btn"
                 android:layout_width="34dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@android:drawable/ic_menu_add" />
+                android:contentDescription="@string/routeDiffLvl"
+                android:src="@android:drawable/ic_menu_gallery" />
+
+            <ImageView
+                android:id="@+id/add_maslul_img"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:src="@drawable/no_image_maslul"
+                android:visibility="invisible" />
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/add_maslul_add_btn"
-            android:layout_width="match_parent"
+            android:id="@+id/add_maslul_save_btn"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Submit" />
+            android:text="@string/save"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_maslul_photo_ll" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

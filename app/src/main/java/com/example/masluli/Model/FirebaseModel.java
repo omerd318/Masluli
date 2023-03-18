@@ -69,7 +69,6 @@ public class FirebaseModel {
         });
     }
 
-
     public boolean isSignedIn(){
         FirebaseUser currentUser = auth.getCurrentUser();
         return (currentUser != null);
