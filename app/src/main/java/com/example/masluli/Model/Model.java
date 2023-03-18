@@ -143,4 +143,11 @@ public class Model {
     public void uploadImage(String name, Bitmap bitmap, Listener<String> listener) {
         firebaseModel.uploadImage(name,bitmap,listener);
     }
+
+    public void getMaslulById(String maslulId, Listener<Maslul> listener) {
+        List<Maslul> maslulimList = allMaslulimList.getValue();
+        Maslul maslul = maslulimList.stream().filter(ms -> ms.getId().
+                equals(maslulId)).findFirst().orElse(null);
+        listener.onComplete(maslul);
+    }
 }
