@@ -121,6 +121,9 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
 
         googleMap.setOnMapClickListener(latLng -> {
+            // Clear past markers
+            map.clear();
+
             // Initialize marker options
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.title(latLng.latitude + ": " + latLng.longitude);

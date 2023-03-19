@@ -97,52 +97,55 @@ public class ProfileFragment extends Fragment {
         });
 
         binding.profileSaveBtn.setOnClickListener(v -> {
-
-            String name = binding.profileNameEt.getText().toString();
-            String email = binding.profileEmailEt.getText().toString();
-            String age = binding.profileAgeEt.getText().toString();
-
-
-            if (!email.equals("") && !name.equals("") &&
-                    !age.equals("") && !area.equals("")) {
-
-                binding.profileProgressbar.setVisibility(View.VISIBLE);
-
-                        User newUser = new User(name, email, age, area);
-                        newUser.setImageUrl(initialUserUrl);
-
-                        if (isAvatarSelected) {
-                            binding.profileImageImv.setDrawingCacheEnabled(true);
-                            binding.profileImageImv.buildDrawingCache();
-                            Bitmap imageBitmap = ((BitmapDrawable) binding.profileImageImv.getDrawable()).getBitmap();
-
-                            // Add to storage account and save url
-                            Model.instance().uploadImage(email, imageBitmap, url -> {
-                                if (url != null) {
-                                    newUser.setImageUrl(url);
-                                }
-                                Model.instance().addUser(newUser, usr -> {
-                                    binding.profileProgressbar.setVisibility(View.GONE);
-                                    Toast.makeText(getContext(), "User saved successfully",
-                                            Toast.LENGTH_SHORT).show();
-                                });
-                            });
-                        } else {
-                            // Save without img
-                            Model.instance().addUser(newUser, usr -> {
-                                binding.profileProgressbar.setVisibility(View.GONE);
-                                Toast.makeText(getContext(), "User saved successfully",
-                                        Toast.LENGTH_SHORT).show();
-                            });
-                        }
-
-            } else {
-                Toast.makeText(getContext(), "All the fields are required",
-                        Toast.LENGTH_LONG).show();
-            }
+            saveProfile();
         });
 
         return view;
+    }
+
+    private void saveProfile() {
+        String name = binding.profileNameEt.getText().toString();
+        String email = binding.profileEmailEt.getText().toString();
+        String age = binding.profileAgeEt.getText().toString();
+
+
+        if (!email.equals("") && !name.equals("") &&
+                !age.equals("") && !area.equals("")) {
+
+            binding.profileProgressbar.setVisibility(View.VISIBLE);
+
+            User newUser = new User(name, email, age, area);
+            newUser.setImageUrl(initialUserUrl);
+
+            if (isAvatarSelected) {
+                binding.profileImageImv.setDrawingCacheEnabled(true);
+                binding.profileImageImv.buildDrawingCache();
+                Bitmap imageBitmap = ((BitmapDrawable) binding.profileImageImv.getDrawable()).getBitmap();
+
+                // Add to storage account and save url
+                Model.instance().uploadImage(email, imageBitmap, url -> {
+                    if (url != null) {
+                        newUser.setImageUrl(url);
+                    }
+                    Model.instance().addUser(newUser, usr -> {
+                        binding.profileProgressbar.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "User saved successfully",
+                                Toast.LENGTH_SHORT).show();
+                    });
+                });
+            } else {
+                // Save without img
+                Model.instance().addUser(newUser, usr -> {
+                    binding.profileProgressbar.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "User saved successfully",
+                            Toast.LENGTH_SHORT).show();
+                });
+            }
+
+        } else {
+            Toast.makeText(getContext(), "All the fields are required",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     private void initSpinner(View view) {

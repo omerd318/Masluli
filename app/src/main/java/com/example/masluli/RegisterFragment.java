@@ -84,54 +84,58 @@ public class RegisterFragment extends Fragment {
         });
 
         binding.registerRegisterBtn.setOnClickListener(v -> {
+            register();
+        });
 
-            String name = binding.registerNameEt.getText().toString();
-            String email = binding.registerEmailEt.getText().toString();
-            String password = binding.registerPasswordEt.getText().toString();
-            String age = binding.registerAgeEt.getText().toString();
+        return view;
+    }
 
-            if(!email.equals("") && !password.equals("") && !name.equals("") &&
-                    !age.equals("") && !area.equals("")) {
+    private void register() {
 
-                binding.registerProgressbar.setVisibility(View.VISIBLE);
+        String name = binding.registerNameEt.getText().toString();
+        String email = binding.registerEmailEt.getText().toString();
+        String password = binding.registerPasswordEt.getText().toString();
+        String age = binding.registerAgeEt.getText().toString();
 
-                Model.instance.register(email, password, user -> {
-                    if(user != null) {
-                        User newUser = new User(name, email, age, area);
+        if(!email.equals("") && !password.equals("") && !name.equals("") &&
+                !age.equals("") && !area.equals("")) {
 
-                        if (isAvatarSelected) {
-                            binding.registerImageImv.setDrawingCacheEnabled(true);
-                            binding.registerImageImv.buildDrawingCache();
-                            Bitmap imageBitmap = ((BitmapDrawable) binding.registerImageImv.getDrawable()).getBitmap();
+            binding.registerProgressbar.setVisibility(View.VISIBLE);
 
-                            // Add to storage account and save url
-                            Model.instance().uploadImage(email, imageBitmap, url->{
-                                if (url != null){
-                                    newUser.setImageUrl(url);
-                                }
-                                Model.instance().addUser(newUser, usr -> {
-                                    binding.registerProgressbar.setVisibility(View.GONE);
-                                    toMainScreen();
-                                });
-                            });
-                        } else {
-                            // Save without img
+            Model.instance.register(email, password, user -> {
+                if(user != null) {
+                    User newUser = new User(name, email, age, area);
+
+                    if (isAvatarSelected) {
+                        binding.registerImageImv.setDrawingCacheEnabled(true);
+                        binding.registerImageImv.buildDrawingCache();
+                        Bitmap imageBitmap = ((BitmapDrawable) binding.registerImageImv.getDrawable()).getBitmap();
+
+                        // Add to storage account and save url
+                        Model.instance().uploadImage(email, imageBitmap, url->{
+                            if (url != null){
+                                newUser.setImageUrl(url);
+                            }
                             Model.instance().addUser(newUser, usr -> {
                                 binding.registerProgressbar.setVisibility(View.GONE);
                                 toMainScreen();
                             });
-                        }
-                    } else { binding.registerProgressbar.setVisibility(View.GONE); }
-                });
-            }
-            else {
-                Toast.makeText(getContext(), "All the fields are required",
-                        Toast.LENGTH_LONG).show();
-            }
+                        });
+                    } else {
+                        // Save without img
+                        Model.instance().addUser(newUser, usr -> {
+                            binding.registerProgressbar.setVisibility(View.GONE);
+                            toMainScreen();
+                        });
+                    }
+                } else { binding.registerProgressbar.setVisibility(View.GONE); }
+            });
+        }
+        else {
+            Toast.makeText(getContext(), "All the fields are required",
+                    Toast.LENGTH_LONG).show();
+        }
 
-        });
-
-        return view;
     }
 
     private void initSpinner(View view) {
