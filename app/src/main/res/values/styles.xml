@@ -4,4 +4,8 @@
         <item name="cornerSize">15%</item>
         <item name="color">@color/masluli_dark_green</item>
     </style>
+    <style name="RatingBar"
+        parent="android:style/Widget.Material.RatingBar">
+        <item name="colorControlNormal">@color/white</item>
+    </style>
 </resources>

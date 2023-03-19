@@ -22,6 +22,7 @@ public class Maslul implements Serializable {
     public static final String COLLECTION_NAME = "maslulim";
     public static final String LAST_UPDATED = "lastUpdated";
     public static final String LOCAL_LAST_UPDATED = "maslulim_local_last_update";
+    private static final int MAX_RATING = 5;
 
     @PrimaryKey
     @NonNull
@@ -36,6 +37,7 @@ public class Maslul implements Serializable {
     String description;
     String userId;
     String imageUrl;
+//    int rating;
     Long lastUpdated;  // on firebase
     GeoPoint latlng;
     Boolean isDeleted;
@@ -51,6 +53,7 @@ public class Maslul implements Serializable {
         this.isRounded = isRounded;
         this.description = description;
         this.userId = userId;
+//        this.rating = rating;
         this.latlng = null;
         if(latlng != null) {
             this.latlng = new GeoPoint(latlng.getLatitude(), latlng.getLongitude());
@@ -70,6 +73,7 @@ public class Maslul implements Serializable {
         this.description = "";
         this.userId = "";
         this.lastUpdated = new Long(0);
+//        this.rating = 0;
         this.latlng = new GeoPoint(0,0);
         this.isDeleted = false;
     }
@@ -102,6 +106,7 @@ public class Maslul implements Serializable {
         Boolean isRounded = (Boolean) maslulJson.get("isRounded");
         String description = (String) maslulJson.get("description");
         String userId = (String) maslulJson.get("userId");
+//        int rating = ((Long) maslulJson.get("rating")).intValue();
         String imageUrl = (String) maslulJson.get("imageUrl");
         GeoPoint latLng = (GeoPoint) maslulJson.get("latlng");
         Boolean isDeleted = (Boolean) maslulJson.get("isDeleted");
@@ -130,6 +135,7 @@ public class Maslul implements Serializable {
         json.put("isRounded", isRounded);
         json.put("description", description);
         json.put("userId", userId);
+//        json.put("rating", rating);
         json.put("imageUrl", imageUrl);
         json.put("latlng", latlng);
         json.put("isDeleted", isDeleted);
@@ -218,6 +224,18 @@ public class Maslul implements Serializable {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
+//    public int getRating() {
+//        return rating;
+//    }
+//
+//    public void setRating(int rating) {
+//        if(rating > MAX_RATING) {
+//            rating = MAX_RATING;
+//        }
+//
+//        this.rating = rating;
+//    }
 
     public Boolean getDeleted() {
         return isDeleted;
