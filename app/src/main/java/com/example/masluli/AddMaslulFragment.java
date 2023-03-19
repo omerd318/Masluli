@@ -8,27 +8,36 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 
 import com.example.masluli.Model.Maslul;
 import com.example.masluli.Model.Model;
-import com.example.masluli.Model.User;
 import com.example.masluli.databinding.FragmentAddMaslulBinding;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.GeoPoint;
 
-public class AddMaslulFragment extends Fragment {
+public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
+    private static final int DEFAULT_ZOOM = 13;
+
     FragmentAddMaslulBinding binding;
     ActivityResultLauncher<String> galleryLauncher;
     Boolean isImageSelected = false;
+    View view;
+    MapView mapView;
+    GoogleMap map;
+    private final LatLng defaultLocation = new LatLng(31.8747353, 34.9175069);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,59 +57,97 @@ public class AddMaslulFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAddMaslulBinding.inflate(inflater,container,false);
-        View view = binding.getRoot();
-
-        String[] locations = getResources().getStringArray(R.array.locations_array);
-        binding.addMaslulLocationAc.setAdapter(
-                new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, locations));
+        view = binding.getRoot();
 
         String[] difficulties = getResources().getStringArray(R.array.difficulties_array);
         binding.addMaslulDiffLvlAc.setAdapter(
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, difficulties));
 
         binding.addMaslulSaveBtn.setOnClickListener(view1 -> {
-            String name = binding.addMaslulNameEt.getText().toString();
-            String location = binding.addMaslulLocationAc.getText().toString();
-            int length = Integer.parseInt(binding.addMaslulLengthEt.getText().toString());
-            Maslul.Difficulty difficulty = Maslul.Difficulty.valueOf(binding.addMaslulDiffLvlAc.getText().toString());
-            boolean isAccessible = binding.addMaslulAccessibleToggleBtn.isChecked();
-            boolean isWater = binding.addMaslulWaterToggleBtn.isChecked();
-            boolean isRounded = binding.addMaslulRoundToggleBtn.isChecked();
-            String userId = Model.instance().getUserEmail();
-            String description = binding.addMaslulDescriptionEt.getText().toString();
-//            GeoPoint latlng = ??
-
-//            // TODO: Replace - id, defficulty, lating
-//            Maslul maslul = new Maslul("123", name, location, length, difficulty,
-//                                       isAccessible, isWater, isRounded, description, userId, null);
-//
-//            if (isImageSelected) {
-//                binding.addMaslulImg.setDrawingCacheEnabled(true);
-//                binding.addMaslulImg.buildDrawingCache();
-//                Bitmap bitmap = ((BitmapDrawable) binding.addMaslulImg.getDrawable()).getBitmap();
-//                Model.instance().uploadImage(name, bitmap, url->{
-//                    if (url != null){
-//                        maslul.setImageUrl(url);
-//                    }
-//                    Model.instance().addMaslul(maslul, (unused) -> {
-//                        Navigation.findNavController(view1).popBackStack();
-//                    });
-//                });
-//            } else {
-//                Model.instance().addMaslul(maslul, (unused) -> {
-//                    Navigation.findNavController(view1).popBackStack();
-//                });
-//            }
+            saveMaslul(binding, view1);
         });
 
         binding.addMaslulGalleryBtn.setOnClickListener(view1->{
             galleryLauncher.launch("image/*");
         });
 
+        MapsInitializer.initialize(this.getActivity());
+        mapView = view.findViewById(R.id.add_maslul_map_view);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+
         return view;
     }
 
-    private static final String[] LOCATIONS = new String[] {
-            "north", "east", "south", "west"
-    };
+    private void saveMaslul(FragmentAddMaslulBinding binding, View view) {
+        String name = binding.addMaslulNameEt.getText().toString();
+        String location = binding.addMaslulLocationEt.getText().toString();
+        int length = Integer.parseInt(binding.addMaslulLengthEt.getText().toString());
+        Maslul.Difficulty difficulty = Maslul.Difficulty.valueOf(binding.addMaslulDiffLvlAc.getText().toString());
+        boolean isAccessible = binding.addMaslulAccessibleToggleBtn.isChecked();
+        boolean isWater = binding.addMaslulWaterToggleBtn.isChecked();
+        boolean isRounded = binding.addMaslulRoundToggleBtn.isChecked();
+        String userId = Model.instance().getUserEmail();
+        String description = binding.addMaslulDescriptionEt.getText().toString();
+        int rating = (int) binding.addMaslulRatingBar.getRating();      // TODO: Add rating to Model
+        GeoPoint geoPoint = new GeoPoint(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
+
+            // TODO: Replace - lating, check if ID generates
+            Maslul maslul = new Maslul("", name, location, length, difficulty, isAccessible,
+                                       isWater, isRounded, description, userId, geoPoint);
+
+            if (isImageSelected) {
+                binding.addMaslulImg.setDrawingCacheEnabled(true);
+                binding.addMaslulImg.buildDrawingCache();
+                Bitmap bitmap = ((BitmapDrawable) binding.addMaslulImg.getDrawable()).getBitmap();
+                Model.instance().uploadImage(name, bitmap, url->{
+                    if (url != null){
+                        maslul.setImageUrl(url);
+                    }
+                    Model.instance().addMaslul(maslul, (unused) -> {
+                        Navigation.findNavController(view).popBackStack();
+                    });
+                });
+            } else {
+                Model.instance().addMaslul(maslul, (unused) -> {
+                    Navigation.findNavController(view).popBackStack();
+                });
+            }
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        map = googleMap;
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+
+        googleMap.setOnMapClickListener(latLng -> {
+            // Initialize marker options
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.title(latLng.latitude + ": " + latLng.longitude);
+            // set position of marker
+            markerOptions.position(latLng);
+
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    latLng, 10
+            ));
+            map.addMarker(markerOptions);
+        });
+
+    }
+
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
 }

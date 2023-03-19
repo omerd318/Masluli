@@ -5,8 +5,7 @@
         <item name="color">@color/masluli_dark_green</item>
     </style>
     <style name="RatingBar"
-        parent="android:style/Widget.Material.RatingBar.Small">
+        parent="android:style/Widget.Material.RatingBar">
         <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlActivated">@color/masluli_dark_green</item>
     </style>
 </resources>

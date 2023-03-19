@@ -40,7 +40,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/add_maslul_location"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -55,13 +55,28 @@
             app:layout_constraintTop_toBottomOf="@id/add_maslul_name"
             app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full">
 
-            <AutoCompleteTextView
-                android:id="@+id/add_maslul_location_ac"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_maslul_location_et"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="none" />
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.gms.maps.MapView
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/add_maslul_map_view"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="5dp"
+            android:apiKey="AIzaSyAyJkLoxPVHOqPrU7bQbEU2jdXL6sOdDVg"
+            android:clickable="true"
+            map:uiCompass="true"
+            map:zOrderOnTop="true"
+            map:uiZoomControls="true"
+            android:contentDescription="@string/routeLocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_maslul_location" />
 
         <LinearLayout
             android:id="@+id/add_maslul_route_data_ll"
@@ -72,7 +87,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_maslul_location">
+            app:layout_constraintTop_toBottomOf="@id/add_maslul_map_view">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -120,7 +135,7 @@
 
         <LinearLayout
             android:id="@+id/add_maslul_toggle_ll"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
@@ -148,7 +163,6 @@
                 android:id="@+id/add_maslul_water_toggle_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:background="@color/masluli_cards"
                 android:text="Water"
                 android:textColor="@color/masluli_green"
@@ -175,7 +189,7 @@
             android:id="@+id/add_maslul_description"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="250dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -191,7 +205,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/add_maslul_description_et"
                 android:layout_width="match_parent"
-                android:layout_height="325dp"
+                android:layout_height="300dp"
                 android:elegantTextHeight="false"
                 android:inputType="textLongMessage"
                 android:textColorHint="@color/black" />
@@ -223,6 +237,7 @@
                 style="@style/RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/routeRating"
                 android:numStars="5"
                 android:stepSize="1" />
         </LinearLayout>
@@ -273,6 +288,7 @@
             android:layout_weight="1"
             android:text="@string/save"
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_maslul_photo_ll" />
