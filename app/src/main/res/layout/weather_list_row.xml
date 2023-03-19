@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="false"
+    android:focusable="auto"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="20dp"
+    app:cardPreventCornerOverlap="true"
+    tools:layout_editor_absoluteX="12dp"
+    tools:layout_editor_absoluteY="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/weather_card"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/masluli_cards"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/weather_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/weather_default"
+            app:layout_constraintEnd_toStartOf="@+id/weather_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/weather_date"
+            android:layout_width="110dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:text="Date"
+            app:layout_constraintEnd_toStartOf="@+id/weather_temp"
+            app:layout_constraintStart_toEndOf="@+id/weather_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/weather_temp"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:text="Temp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/weather_date"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
