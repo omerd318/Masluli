@@ -25,9 +25,9 @@
         android:name="com.example.masluli.MaslulimFragment"
         android:label="Masluli"
         tools:layout="@layout/fragment_maslulim" >
-        <argument
-            android:name="maslul"
-            app:argType="com.example.masluli.Model.Maslul"/>
+        <action
+            android:id="@+id/action_maslulimFragment_to_maslulDetailsFragment"
+            app:destination="@id/maslulDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addMaslulFragment"

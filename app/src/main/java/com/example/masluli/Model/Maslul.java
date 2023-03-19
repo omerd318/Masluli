@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class Maslul implements Serializable {
+public class Maslul {
     public static final String COLLECTION_NAME = "maslulim";
     public static final String LAST_UPDATED = "lastUpdated";
     public static final String LOCAL_LAST_UPDATED = "maslulim_local_last_update";

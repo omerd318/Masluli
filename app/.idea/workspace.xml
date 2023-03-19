@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0b7b82-eb59-4e55-8974-7874b9f414e3" name="Changes" comment="" />
+    <list default="true" id="3c0b7b82-eb59-4e55-8974-7874b9f414e3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/masluli/ViewMaslulFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_view_maslul.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/masluli/AddMaslulFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/masluli/AddMaslulFragment.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

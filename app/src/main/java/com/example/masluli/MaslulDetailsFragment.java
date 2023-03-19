@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.masluli.Model.Model;
 import com.example.masluli.databinding.FragmentMaslulDetailsBinding;
+import com.squareup.picasso.Picasso;
 
 public class MaslulDetailsFragment extends Fragment {
 
@@ -33,10 +34,19 @@ public class MaslulDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentMaslulDetailsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        Log.d("TAG", "maslul id: " + maslulId);
 
         Model.instance().getMaslulById(maslulId, (maslul) -> {
-            // TODO: show maslul details
+            binding.maslulDetailsNameTv.setText(maslul.getTitle());
+            binding.maslulDetailsLocationTv.setText(maslul.getLocation());
+            binding.maslulDetailsDetailsTv.setText(maslul.getDifficulty().name() + ", " + maslul.getLength() + " Km");
+            Model.instance().getUserById(maslul.getUserId(), user -> {
+                binding.maslulDetailsUserTv.setText(user.getName());
+            });
+            binding.maslulDetailsDescriptionTv.setText(maslul.getDescription());
+            binding.maslulDetailsImg.setImageResource(R.drawable.no_image_maslul);
+            if (maslul.getImageUrl() != null && !maslul.getImageUrl().equals("")) {
+                Picasso.get().load(maslul.getImageUrl()).into(binding.maslulDetailsImg);
+            }
         });
         return view;
     }

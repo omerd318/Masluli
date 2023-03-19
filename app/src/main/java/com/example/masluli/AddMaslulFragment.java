@@ -18,7 +18,6 @@ import android.widget.ArrayAdapter;
 import com.example.masluli.Model.Maslul;
 import com.example.masluli.Model.Model;
 import com.example.masluli.databinding.FragmentAddMaslulBinding;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -29,7 +28,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.GeoPoint;
 
 public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
+    public enum MaslulMode {
+        Edit,
+        Add
+    }
+
     private static final int DEFAULT_ZOOM = 13;
+    private final LatLng defaultLocation = new LatLng(31.8747353, 34.9175069);
 
     FragmentAddMaslulBinding binding;
     ActivityResultLauncher<String> galleryLauncher;
@@ -37,7 +42,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
     View view;
     MapView mapView;
     GoogleMap map;
-    private final LatLng defaultLocation = new LatLng(31.8747353, 34.9175069);
+    MaslulMode mode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,7 +136,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
             markerOptions.position(latLng);
 
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    latLng, 10
+                    latLng, 15
             ));
             map.addMarker(markerOptions);
         });
