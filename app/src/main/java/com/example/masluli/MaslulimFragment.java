@@ -80,7 +80,6 @@ public class MaslulimFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-//        viewModel = new ViewModelProvider(this).get(MaslulimListViewModel.class);
         viewModel = new MaslulimListViewModel(MaslulimListViewModel.ListMode.AllMaslulim);
     }
 

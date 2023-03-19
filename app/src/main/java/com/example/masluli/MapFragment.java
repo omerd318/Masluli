@@ -28,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -217,7 +218,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(maslul.getLatitude(), maslul.getLongitude()))
                     .title(maslul.getTitle()));
-            marker.setTag(maslul);
+            marker.setTag(maslul.getId());
         }
 
     }
@@ -232,9 +233,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
     public void onInfoWindowClick(@NonNull Marker marker) {
         Object tag = marker.getTag();
         if(tag != null) {
-            Maslul maslul = (Maslul) tag;
-            MapFragmentDirections.ActionMapFragmentToViewMaslulFragment action = MapFragmentDirections.actionMapFragmentToViewMaslulFragment(maslul);
-            Navigation.findNavController(view).navigate(action);
+            String maslulId = (String) tag;
+//            MapFragmentDirections.ActionMapFragmentToViewMaslulFragment action = MapFragmentDirections.actionMapFragmentToViewMaslulFragment(maslulId);
+            Navigation.findNavController(view).navigate(MapFragmentDirections.actionMapFragmentToMaslulDetailsFragment(maslulId));
         }
     }
 }
