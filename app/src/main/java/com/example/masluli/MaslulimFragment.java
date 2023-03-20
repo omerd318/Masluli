@@ -50,9 +50,9 @@ public class MaslulimFragment extends Fragment {
 
         adapter.setOnItemClickListener((v, position) -> {
             Maslul maslul = viewModel.getData().getValue().get(position);
-            // TODO: navigate to view maslul screen
-//            Navigation.findNavController(v).navigate(AllDonationsListDirections.
-//                    actionAllDonationsListToDonationDetailsFragment(donationId));
+
+            Navigation.findNavController(v).navigate(MaslulimFragmentDirections.
+                            actionMaslulimFragmentToMaslulDetailsFragment(maslul.getId()));
 
         });
 

@@ -11,20 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-
 import com.example.masluli.Model.Model;
 import com.example.masluli.databinding.FragmentLoginBinding;
-import com.example.masluli.databinding.FragmentRegisterBinding;
 
 public class LoginFragment extends Fragment {
-//    EditText emailEt;
-//    EditText passwordEt;
-//    Button loginBtn;
-//    Button moveToRegBtn;
-//    ProgressBar progressBar;
     FragmentLoginBinding binding;
 
     @Override

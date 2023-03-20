@@ -25,9 +25,9 @@
         android:name="com.example.masluli.MaslulimFragment"
         android:label="Masluli"
         tools:layout="@layout/fragment_maslulim" >
-        <argument
-            android:name="maslul"
-            app:argType="com.example.masluli.Model.Maslul"/>
+        <action
+            android:id="@+id/action_maslulimFragment_to_maslulDetailsFragment"
+            app:destination="@id/maslulDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addMaslulFragment"
@@ -48,6 +48,14 @@
         <argument
             android:name="maslulId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_maslulDetailsFragment_to_weatherFragment"
+            app:destination="@id/weatherFragment" />
     </fragment>
     <action android:id="@+id/action_global_myMaslulimFragment" app:destination="@id/myMaslulimFragment" />
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="com.example.masluli.WeatherFragment"
+        android:label="Weather"
+        tools:layout="@layout/fragment_weather" />
 </navigation>

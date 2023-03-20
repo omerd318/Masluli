@@ -18,7 +18,6 @@ import android.widget.ArrayAdapter;
 import com.example.masluli.Model.Maslul;
 import com.example.masluli.Model.Model;
 import com.example.masluli.databinding.FragmentAddMaslulBinding;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -29,7 +28,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.GeoPoint;
 
 public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
+    public enum MaslulMode {
+        Edit,
+        Add
+    }
+
     private static final int DEFAULT_ZOOM = 13;
+    private final LatLng defaultLocation = new LatLng(31.8747353, 34.9175069);
 
     FragmentAddMaslulBinding binding;
     ActivityResultLauncher<String> galleryLauncher;
@@ -37,7 +42,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
     View view;
     MapView mapView;
     GoogleMap map;
-    private final LatLng defaultLocation = new LatLng(31.8747353, 34.9175069);
+    MaslulMode mode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +69,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, difficulties));
 
         binding.addMaslulSaveBtn.setOnClickListener(view1 -> {
-            saveMaslul(binding, view1);
+            saveMaslul(view1);
         });
 
         binding.addMaslulGalleryBtn.setOnClickListener(view1->{
@@ -79,7 +84,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         return view;
     }
 
-    private void saveMaslul(FragmentAddMaslulBinding binding, View view) {
+    private void saveMaslul(View view) {
         String name = binding.addMaslulNameEt.getText().toString();
         String location = binding.addMaslulLocationEt.getText().toString();
         int length = Integer.parseInt(binding.addMaslulLengthEt.getText().toString());
@@ -89,10 +94,9 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         boolean isRounded = binding.addMaslulRoundToggleBtn.isChecked();
         String userId = Model.instance().getUserEmail();
         String description = binding.addMaslulDescriptionEt.getText().toString();
-        int rating = (int) binding.addMaslulRatingBar.getRating();      // TODO: Add rating to Model
+//        int rating = (int) binding.addMaslulRatingBar.getRating();      // TODO: Add rating to Model
         GeoPoint geoPoint = new GeoPoint(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
 
-            // TODO: Replace - lating, check if ID generates
             Maslul maslul = new Maslul("", name, location, length, difficulty, isAccessible,
                                        isWater, isRounded, description, userId, geoPoint);
 
@@ -131,11 +135,10 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
             markerOptions.position(latLng);
 
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    latLng, 10
+                    latLng, 15
             ));
             map.addMarker(markerOptions);
         });
-
     }
 
     @Override
