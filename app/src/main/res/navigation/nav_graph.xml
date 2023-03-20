@@ -48,6 +48,9 @@
         <argument
             android:name="maslulId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_maslulDetailsFragment_to_weatherFragment"
+            app:destination="@id/weatherFragment" />
     </fragment>
     <action android:id="@+id/action_global_myMaslulimFragment" app:destination="@id/myMaslulimFragment" />
     <fragment
@@ -55,7 +58,4 @@
         android:name="com.example.masluli.WeatherFragment"
         android:label="Weather"
         tools:layout="@layout/fragment_weather" />
-
-<!--    TODO: make action not global -->
-    <action android:id="@+id/action_global_weatherFragment" app:destination="@id/weatherFragment" />
 </navigation>

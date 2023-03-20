@@ -7,38 +7,81 @@
     tools:context=".MaslulDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/ShapeAppearanceOverlay.App.CornerSize8Percent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         android:background="@color/masluli_cards"
         android:padding="10dp">
 
-        <LinearLayout
-            android:id="@+id/maslul_details_header_ll"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
+        <TextView
+            android:id="@+id/maslul_details_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/masluli_green"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/maslul_details_name_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/masluli_green"
-                android:textSize="24sp" />
+        <ImageButton
+            android:id="@+id/maslul_details_weather_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="WeatherBtn"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_sunny"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <RatingBar
-                android:id="@+id/maslul_details_rating_bar"
-                style="@style/DisplayRatingBar"
+        <RatingBar
+            android:id="@+id/maslul_details_rating_bar"
+            style="@style/DisplayRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|start"
+            android:clickable="false"
+            android:contentDescription="@string/routeRating"
+            android:numStars="5"
+            android:stepSize="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/maslul_details_name_tv" />
+
+        <LinearLayout
+            android:id="@+id/maslul_details_data_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/maslul_details_rating_bar">
+
+            <ImageView
+                android:id="@+id/maslul_details_accessible_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|end"
-                android:clickable="false"
-                android:contentDescription="@string/routeRating"
-                android:numStars="5"
-                android:stepSize="1" />
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:visibility="visible"
+                tools:src="@drawable/ic_accessible" />
+
+            <ImageView
+                android:id="@+id/maslul_details_water_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_water"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/maslul_details_round_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_restart" />
         </LinearLayout>
 
         <TextView
@@ -47,10 +90,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textColor="@color/masluli_dark_green"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/maslul_details_header_ll" />
+            app:layout_constraintTop_toBottomOf="@+id/maslul_details_data_ll" />
 
         <TextView
             android:id="@+id/maslul_details_details_tv"
@@ -58,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textColor="@color/masluli_dark_green"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/maslul_details_location_tv" />
@@ -69,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textColor="@color/masluli_dark_green"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/maslul_details_details_tv" />
@@ -92,7 +135,24 @@
             android:src="@drawable/no_image_maslul"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/maslul_details_description_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/maslul_details_description_tv"/>
+
+<!--        <com.google.android.gms.maps.MapView-->
+<!--            xmlns:map="http://schemas.android.com/apk/res-auto"-->
+<!--            android:id="@+id/maslul_details_map"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:apiKey="@string/google_api_key"-->
+<!--            android:clickable="false"-->
+<!--            android:contentDescription="@string/routeLocation"-->
+<!--            map:uiCompass="true"-->
+<!--            map:zOrderOnTop="true"-->
+<!--            map:uiZoomControls="true"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/maslul_details_img" />-->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

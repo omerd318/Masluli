@@ -20,7 +20,6 @@ class WeatherListAdapter extends RecyclerView.Adapter<WeatherListViewHolder>{
     LayoutInflater inflater;
     List<Forecastday> data;
 
-
     public WeatherListAdapter(LayoutInflater inflater, List<Forecastday> data) {
         this.inflater = inflater;
         this.data = data;

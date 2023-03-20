@@ -22,7 +22,7 @@ public class Maslul {
     public static final String COLLECTION_NAME = "maslulim";
     public static final String LAST_UPDATED = "lastUpdated";
     public static final String LOCAL_LAST_UPDATED = "maslulim_local_last_update";
-    private static final int MAX_RATING = 5;
+//    private static final int MAX_RATING = 5;
 
     @PrimaryKey
     @NonNull
