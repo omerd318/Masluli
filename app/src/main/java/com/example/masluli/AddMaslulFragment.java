@@ -48,6 +48,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap map;
     MaslulMode mode = MaslulMode.Add;
     Maslul currMaslul;
+    String[] difficulties;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         binding = FragmentAddMaslulBinding.inflate(inflater,container,false);
         view = binding.getRoot();
 
-        String[] difficulties = getResources().getStringArray(R.array.difficulties_array);
+        difficulties = getResources().getStringArray(R.array.difficulties_array);
         binding.addMaslulDiffLvlAc.setAdapter(
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, difficulties));
 
@@ -95,7 +96,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         }
 
         binding.addMaslulSaveBtn.setOnClickListener(view1 -> {
-            saveMaslul(view1);
+            saveNewMaslul(view1);
         });
 
         binding.addMaslulGalleryBtn.setOnClickListener(view1->{
@@ -105,7 +106,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         return view;
     }
 
-    private void saveMaslul(View view) {
+    private void saveNewMaslul(View view) {
         String id = "";
         String name = binding.addMaslulNameEt.getText().toString();
         String location = binding.addMaslulLocationEt.getText().toString();
@@ -117,17 +118,24 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         String userId = Model.instance().getUserEmail();
         String description = binding.addMaslulDescriptionEt.getText().toString();
 //        int rating = (int) binding.addMaslulRatingBar.getRating();      // TODO: Add rating to Model
-        GeoPoint geoPoint = new GeoPoint(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
+        GeoPoint geoPoint;
 
-            Maslul maslul = new Maslul("", name, location, length, difficulty, isAccessible,
-                                       isWater, isRounded, description, userId, geoPoint);
+        if(mode == MaslulMode.Edit) {
+            id = currMaslul.getId();
+            geoPoint = new GeoPoint(currMaslul.getLatitude(), currMaslul.getLongitude());
+        } else {
+            geoPoint = new GeoPoint(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
+        }
+
+        Maslul maslul = new Maslul(id, name, location, length, difficulty, isAccessible,
+                                    isWater, isRounded, description, userId, geoPoint);
 
             if (isImageSelected) {
                 binding.addMaslulImg.setDrawingCacheEnabled(true);
                 binding.addMaslulImg.buildDrawingCache();
                 Bitmap bitmap = ((BitmapDrawable) binding.addMaslulImg.getDrawable()).getBitmap();
-                Model.instance().uploadImage(name, bitmap, url->{
-                    if (url != null){
+                Model.instance().uploadImage(name + "_" + userId, bitmap, url-> {
+                    if (url != null) {
                         maslul.setImageUrl(url);
                     }
                     Model.instance().addMaslul(maslul, (unused) -> {
@@ -146,6 +154,8 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         binding.addMaslulLocationEt.setText(currMaslul.getLocation());
         binding.addMaslulLengthEt.setText(Integer.toString(currMaslul.getLength()));
         binding.addMaslulDiffLvlAc.setText(currMaslul.getDifficulty().name());
+        binding.addMaslulDiffLvlAc.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, difficulties));
+//        binding.addMaslulDiffLvlAc.setDropDownAnchor();
         binding.addMaslulAccessibleToggleBtn.setChecked(currMaslul.getAccessible());
         binding.addMaslulWaterToggleBtn.setChecked(currMaslul.getWater());
         binding.addMaslulRoundToggleBtn.setChecked(currMaslul.getRounded());
