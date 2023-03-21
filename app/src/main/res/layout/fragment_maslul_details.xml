@@ -41,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|start"
+            android:layout_marginTop="5dp"
             android:clickable="false"
             android:contentDescription="@string/routeRating"
             android:numStars="5"
@@ -51,7 +52,7 @@
         <LinearLayout
             android:id="@+id/maslul_details_data_ll"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="left"
             android:orientation="horizontal"
@@ -61,7 +62,7 @@
             <ImageView
                 android:id="@+id/maslul_details_accessible_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:visibility="visible"
@@ -70,7 +71,7 @@
             <ImageView
                 android:id="@+id/maslul_details_water_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_water"
@@ -79,7 +80,7 @@
             <ImageView
                 android:id="@+id/maslul_details_round_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_restart" />
         </LinearLayout>
