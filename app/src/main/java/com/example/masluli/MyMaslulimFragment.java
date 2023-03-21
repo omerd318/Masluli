@@ -68,10 +68,8 @@ public class MyMaslulimFragment extends Fragment {
 
         adapter.setOnItemClickListener((v, position) -> {
             Maslul maslul = viewModel.getData().getValue().get(position);
-            // TODO: navigate to view maslul screen
-//            Navigation.findNavController(v).navigate(MyMaslulimListDirections.
-//                    actionMyMaslulimListToViewMAslulFragment(maslul));
-
+            Navigation.findNavController(v).navigate(MyMaslulimFragmentDirections.
+                    actionGlobalAddMaslulFragment(maslul.getId()));
         });
 
         binding.progressBar.setVisibility(View.GONE);

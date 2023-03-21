@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.GeoPoint;
+import com.squareup.picasso.Picasso;
 
 public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
     public enum MaslulMode {
@@ -33,20 +35,31 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         Add
     }
 
+    private static final String ARG_MASLUL_ID = "maslulId";
     private static final int DEFAULT_ZOOM = 13;
     private final LatLng defaultLocation = new LatLng(31.8747353, 34.9175069);
 
+    private String maslulId;
     FragmentAddMaslulBinding binding;
     ActivityResultLauncher<String> galleryLauncher;
     Boolean isImageSelected = false;
     View view;
     MapView mapView;
     GoogleMap map;
-    MaslulMode mode;
+    MaslulMode mode = MaslulMode.Add;
+    Maslul currMaslul;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            maslulId = getArguments().getString(ARG_MASLUL_ID);
+
+            if(maslulId != null) {
+                mode = MaslulMode.Edit;
+            }
+        }
 
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
             if (result != null){
@@ -68,6 +81,19 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         binding.addMaslulDiffLvlAc.setAdapter(
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, difficulties));
 
+        MapsInitializer.initialize(this.getActivity());
+        mapView = view.findViewById(R.id.add_maslul_map_view);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+
+        if(mode == MaslulMode.Edit) {
+            Model.instance().getMaslulById(maslulId, (maslul) -> {
+                currMaslul = maslul;
+            });
+
+            setEditMaslulFragment();
+        }
+
         binding.addMaslulSaveBtn.setOnClickListener(view1 -> {
             saveMaslul(view1);
         });
@@ -76,15 +102,11 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
             galleryLauncher.launch("image/*");
         });
 
-        MapsInitializer.initialize(this.getActivity());
-        mapView = view.findViewById(R.id.add_maslul_map_view);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
-
         return view;
     }
 
     private void saveMaslul(View view) {
+        String id = "";
         String name = binding.addMaslulNameEt.getText().toString();
         String location = binding.addMaslulLocationEt.getText().toString();
         int length = Integer.parseInt(binding.addMaslulLengthEt.getText().toString());
@@ -119,26 +141,48 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
             }
     }
 
+    private void setEditMaslulFragment() {
+        binding.addMaslulNameEt.setText(currMaslul.getTitle());
+        binding.addMaslulLocationEt.setText(currMaslul.getLocation());
+        binding.addMaslulLengthEt.setText(Integer.toString(currMaslul.getLength()));
+        binding.addMaslulDiffLvlAc.setText(currMaslul.getDifficulty().name());
+        binding.addMaslulAccessibleToggleBtn.setChecked(currMaslul.getAccessible());
+        binding.addMaslulWaterToggleBtn.setChecked(currMaslul.getWater());
+        binding.addMaslulRoundToggleBtn.setChecked(currMaslul.getRounded());
+        binding.addMaslulDescriptionEt.setText(currMaslul.getDescription());
+        if (currMaslul.getImageUrl() != null && !currMaslul.getImageUrl().equals("")) {
+            Picasso.get().load(currMaslul.getImageUrl()).into(binding.addMaslulImg);
+//            binding.addMaslulGalleryBtn.setVisibility(View.INVISIBLE);
+            binding.addMaslulImg.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
 
-        googleMap.setOnMapClickListener(latLng -> {
-            // Clear past markers
-            map.clear();
+        if(mode == MaslulMode.Edit) {
+            map.addMarker(new MarkerOptions()
+                    .position(new LatLng(currMaslul.getLatitude(), currMaslul.getLongitude()))
+                    .title(currMaslul.getTitle()));
+        } else {        // mode == Add
+            googleMap.setOnMapClickListener(latLng -> {
+                // Clear past markers
+                map.clear();
 
-            // Initialize marker options
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.title(latLng.latitude + ": " + latLng.longitude);
-            // set position of marker
-            markerOptions.position(latLng);
+                // Initialize marker options
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.title(latLng.latitude + ": " + latLng.longitude);
+                // set position of marker
+                markerOptions.position(latLng);
 
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    latLng, 15
-            ));
-            map.addMarker(markerOptions);
-        });
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                        latLng, 15
+                ));
+                map.addMarker(markerOptions);
+            });
+        }
     }
 
     @Override
