@@ -7,7 +7,7 @@
     tools:context=".MaslulDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/ShapeAppearanceOverlay.App.CornerSize8Percent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize8Percent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
