@@ -128,7 +128,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         }
 
         Maslul maslul = new Maslul(id, name, location, length, difficulty, isAccessible,
-                                    isWater, isRounded, description, userId, raiting, geoPoint);
+                                    isWater, isRounded, description, userId, rating, geoPoint);
 
             if (isImageSelected) {
                 binding.addMaslulImg.setDrawingCacheEnabled(true);
@@ -154,6 +154,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         binding.addMaslulLocationEt.setText(currMaslul.getLocation());
         binding.addMaslulLengthEt.setText(Integer.toString(currMaslul.getLength()));
         binding.addMaslulDiffLvlAc.setText(currMaslul.getDifficulty().name());
+        binding.addMaslulRatingBar.setRating(currMaslul.getRating());
         binding.addMaslulDiffLvlAc.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, difficulties));
 //        binding.addMaslulDiffLvlAc.setDropDownAnchor();
         binding.addMaslulAccessibleToggleBtn.setChecked(currMaslul.getAccessible());
