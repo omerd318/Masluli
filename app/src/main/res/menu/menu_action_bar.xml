@@ -13,4 +13,10 @@
         android:title="@string/myMaslulim"
         android:visible="true"
         app:showAsAction="withText" />
+    <item
+        android:id="@+id/menu_edit_maslul"
+        android:icon="@drawable/ic_edit"
+        android:title="Edit"
+        android:visible="false"
+        app:showAsAction="always" />
 </menu>

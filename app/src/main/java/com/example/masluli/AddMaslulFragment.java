@@ -70,8 +70,8 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
             if (result != null){
                 binding.addMaslulImg.setImageURI(result);
-                binding.addMaslulGalleryBtn.setVisibility(View.INVISIBLE);
-                binding.addMaslulImg.setVisibility(View.VISIBLE);
+//                binding.addMaslulGalleryBtn.setVisibility(View.INVISIBLE);
+//                binding.addMaslulImg.setVisibility(View.VISIBLE);
                 isImageSelected = true;
             }
         });
@@ -201,7 +201,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         binding.addMaslulDescriptionEt.setText(currMaslul.getDescription());
         if (currMaslul.getImageUrl() != null && !currMaslul.getImageUrl().equals("")) {
             Picasso.get().load(currMaslul.getImageUrl()).into(binding.addMaslulImg);
-//            binding.addMaslulGalleryBtn.setVisibility(View.INVISIBLE);
+            binding.addMaslulGalleryBtn.setVisibility(View.VISIBLE);
             binding.addMaslulImg.setVisibility(View.VISIBLE);
         }
     }
