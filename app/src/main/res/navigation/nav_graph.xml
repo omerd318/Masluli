@@ -33,13 +33,18 @@
         android:id="@+id/addMaslulFragment"
         android:name="com.example.masluli.AddMaslulFragment"
         android:label="Add Maslul"
-        tools:layout="@layout/fragment_add_maslul" />
-    <action android:id="@+id/action_global_addMaslulFragment" app:destination="@id/addMaslulFragment" />
+        tools:layout="@layout/fragment_add_maslul">
+        <argument
+            android:name="maslulId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <action android:id="@+id/action_global_addMaslulFragment" app:destination="@id/addMaslulFragment"/>
     <fragment
         android:id="@+id/myMaslulimFragment"
         android:name="com.example.masluli.MyMaslulimFragment"
         android:label="My Maslulim"
-        tools:layout="@layout/fragment_my_maslulim" />
+        tools:layout="@layout/fragment_my_maslulim"  />
     <fragment
         android:id="@+id/maslulDetailsFragment"
         android:name="com.example.masluli.MaslulDetailsFragment"
@@ -57,5 +62,9 @@
         android:id="@+id/weatherFragment"
         android:name="com.example.masluli.WeatherFragment"
         android:label="Weather"
-        tools:layout="@layout/fragment_weather" />
+        tools:layout="@layout/fragment_weather">
+        <argument
+            android:name="maslulLatlng"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -65,8 +65,9 @@ public class MaslulDetailsFragment extends Fragment
         mapView.getMapAsync(this);
 
         binding.maslulDetailsWeatherBtn.setOnClickListener(v -> {
-                Navigation.findNavController(v).navigate(MaslulDetailsFragmentDirections.
-                                                         actionMaslulDetailsFragmentToWeatherFragment());
+            String latLng = maslul.getLatitude() + "," + maslul.getLongitude();
+            Navigation.findNavController(v).navigate(MaslulDetailsFragmentDirections.
+                                                     actionMaslulDetailsFragmentToWeatherFragment(latLng));
         });
 
         return view;
@@ -87,6 +88,7 @@ public class MaslulDetailsFragment extends Fragment
         Model.instance().getUserById(maslul.getUserId(), user -> {
             binding.maslulDetailsUserTv.setText(user.getName());
         });
+        binding.maslulDetailsRatingBar.setRating(maslul.getRating());
         binding.maslulDetailsDescriptionTv.setText(maslul.getDescription());
         binding.maslulDetailsAccessibleIv.setVisibility(visibilityBoolToInt((maslul.getAccessible())));
         binding.maslulDetailsWaterIv.setVisibility(visibilityBoolToInt((maslul.getWater())));
