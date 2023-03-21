@@ -120,19 +120,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,GoogleM
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
 
-        googleMap.setOnMapClickListener(latLng -> {
-            // Initialize marker options
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.title(latLng.latitude + ": " + latLng.longitude);
-            // set position of marker
-            markerOptions.position(latLng);
-
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    latLng, 10
-            ));
-            googleMap.addMarker(markerOptions);
-        });
-
         loadMaslulimMarkers();
 
         map.setOnInfoWindowClickListener(this);
