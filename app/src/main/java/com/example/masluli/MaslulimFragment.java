@@ -59,8 +59,6 @@ public class MaslulimFragment extends Fragment {
         NavDirections action = MaslulimFragmentDirections.actionGlobalAddMaslulFragment(null);
         addButton.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 
-        binding.progressBar.setVisibility(View.GONE);
-
         viewModel.getData().observe(getViewLifecycleOwner(),list->{
             adapter.setData(list);
         });
@@ -83,7 +81,6 @@ public class MaslulimFragment extends Fragment {
     }
 
     void reloadData(){
-        binding.progressBar.setVisibility(View.VISIBLE);
         Model.instance().refreshAllMaslulim();
     }
 

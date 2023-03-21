@@ -72,8 +72,6 @@ public class MyMaslulimFragment extends Fragment {
                     actionGlobalAddMaslulFragment(maslul.getId()));
         });
 
-        binding.progressBar.setVisibility(View.GONE);
-
         viewModel.getData().observe(getViewLifecycleOwner(),list->{
             adapter.setData(list);
         });
@@ -96,7 +94,6 @@ public class MyMaslulimFragment extends Fragment {
     }
 
     void reloadData(){
-        binding.progressBar.setVisibility(View.VISIBLE);
         Model.instance().refreshAllMaslulim();
     }
 
