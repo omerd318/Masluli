@@ -7,6 +7,7 @@
     tools:context=".AddMaslulFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/add_maslul_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -62,21 +63,20 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.gms.maps.MapView
-            xmlns:map="http://schemas.android.com/apk/res-auto"
+        <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
             android:id="@+id/add_maslul_map_view"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginTop="5dp"
             android:apiKey="@string/google_api_key"
             android:clickable="true"
-            map:uiCompass="true"
-            map:zOrderOnTop="true"
-            map:uiZoomControls="true"
             android:contentDescription="@string/routeLocation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_maslul_location" />
+            app:layout_constraintTop_toBottomOf="@+id/add_maslul_location"
+            map:uiCompass="true"
+            map:uiZoomControls="true"
+            map:zOrderOnTop="true" />
 
         <LinearLayout
             android:id="@+id/add_maslul_route_data_ll"

@@ -11,11 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.example.masluli.Model.Maslul;
 import com.example.masluli.Model.Model;
@@ -98,7 +102,9 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         }
 
         binding.addMaslulSaveBtn.setOnClickListener(view1 -> {
-            saveNewMaslul(view1);
+            if(validateFields(container)) {
+                saveNewMaslul(view1);
+            };
         });
 
         binding.addMaslulGalleryBtn.setOnClickListener(view1->{
@@ -149,6 +155,38 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
                     Navigation.findNavController(view).popBackStack();
                 });
             }
+    }
+
+    private boolean validateFields(ViewGroup viewGroup) {
+        if(TextUtils.isEmpty(binding.addMaslulNameEt.getText()) ||
+           TextUtils.isEmpty(binding.addMaslulLocationEt.getText()) ||
+           TextUtils.isEmpty(binding.addMaslulLengthEt.getText()) ||
+           TextUtils.isEmpty(binding.addMaslulDiffLvlAc.getText()) ||
+           TextUtils.isEmpty(binding.addMaslulDescriptionEt.getText()) ||
+           binding.addMaslulRatingBar.getRating() < 1 ||
+           binding.addMaslulRatingBar.getRating() > 5) {
+            Toast.makeText(getContext(), "All fields are required",
+                    Toast.LENGTH_SHORT).show();
+
+            return false;
+        }
+
+        return true;
+
+//        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+//            View view = viewGroup.getChildAt(i);
+//            if (view instanceof ViewGroup)
+//                validateFields((ViewGroup) view);
+//            else if (view instanceof EditText) {
+//                EditText edittext = (EditText) view;
+//                if (edittext.getText().toString().trim().equals("")) {
+//                    edittext.setError("Required!");
+//                    return false;
+//                }
+//            }
+//        }
+//
+//        return true;
     }
 
     private void setEditMaslulFragment() {
