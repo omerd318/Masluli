@@ -73,12 +73,6 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
             if (result != null){
                 binding.addMaslulImg.setImageURI(result);
-                if(mode == MaslulMode.Add) {
-                    binding.addMaslulImg.setVisibility(View.GONE);
-                } else {
-                    binding.addMaslulGalleryBtn.setVisibility(View.VISIBLE);
-                    binding.addMaslulImg.setVisibility(View.VISIBLE);
-                }
                 isImageSelected = true;
             }
         });
