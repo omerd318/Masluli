@@ -194,6 +194,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         binding.addMaslulLocationEt.setText(currMaslul.getLocation());
         binding.addMaslulLengthEt.setText(Integer.toString(currMaslul.getLength()));
         binding.addMaslulDiffLvlAc.setText(currMaslul.getDifficulty().name());
+        binding.addMaslulRatingBar.setRating(currMaslul.getRating());
         binding.addMaslulDiffLvlAc.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, difficulties));
         binding.addMaslulAccessibleToggleBtn.setChecked(currMaslul.getAccessible());
         binding.addMaslulWaterToggleBtn.setChecked(currMaslul.getWater());
