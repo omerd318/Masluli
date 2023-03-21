@@ -63,7 +63,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
+        <com.google.android.gms.maps.MapView
             android:id="@+id/add_maslul_map_view"
             android:layout_width="0dp"
             android:layout_height="200dp"
@@ -74,9 +74,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_maslul_location"
-            map:uiCompass="true"
-            map:uiZoomControls="true"
-            map:zOrderOnTop="true" />
+            app:uiCompass="true"
+            app:uiZoomControls="true"
+            app:zOrderOnTop="true" />
+
+        <ProgressBar
+            android:id="@+id/add_maslul_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="156dp"
+            android:layout_height="157dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/add_maslul_route_data_ll"
@@ -183,6 +193,7 @@
                 android:textOff="Not rounded"
                 android:textOn="Rounded"
                 android:textSize="14sp" />
+
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -200,15 +211,18 @@
             app:boxStrokeWidth="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_maslul_toggle_ll">
+            app:layout_constraintTop_toBottomOf="@id/add_maslul_toggle_ll"
+            android:inputType="textMultiLine"
+            android:singleLine="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/add_maslul_description_et"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:elegantTextHeight="false"
-                android:inputType="textLongMessage"
+                android:inputType="textLongMessage|textImeMultiLine"
                 android:textColorHint="@color/black" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
