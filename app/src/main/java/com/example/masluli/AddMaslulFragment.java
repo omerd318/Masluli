@@ -94,11 +94,11 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         boolean isRounded = binding.addMaslulRoundToggleBtn.isChecked();
         String userId = Model.instance().getUserEmail();
         String description = binding.addMaslulDescriptionEt.getText().toString();
-//        int rating = (int) binding.addMaslulRatingBar.getRating();      // TODO: Add rating to Model
+        int rating = (int) binding.addMaslulRatingBar.getRating();      // TODO: Add rating to Model
         GeoPoint geoPoint = new GeoPoint(map.getCameraPosition().target.latitude, map.getCameraPosition().target.longitude);
 
             Maslul maslul = new Maslul("", name, location, length, difficulty, isAccessible,
-                                       isWater, isRounded, description, userId, geoPoint);
+                                       isWater, isRounded, description, userId, rating, geoPoint);
 
             if (isImageSelected) {
                 binding.addMaslulImg.setDrawingCacheEnabled(true);
