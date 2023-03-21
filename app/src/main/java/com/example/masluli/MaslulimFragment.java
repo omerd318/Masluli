@@ -50,14 +50,13 @@ public class MaslulimFragment extends Fragment {
 
         adapter.setOnItemClickListener((v, position) -> {
             Maslul maslul = viewModel.getData().getValue().get(position);
-
             Navigation.findNavController(v).navigate(MaslulimFragmentDirections.
                             actionMaslulimFragmentToMaslulDetailsFragment(maslul.getId()));
 
         });
 
         View addButton = view.findViewById(R.id.maslulimList_add_btn);
-        NavDirections action = MaslulimFragmentDirections.actionGlobalAddMaslulFragment();
+        NavDirections action = MaslulimFragmentDirections.actionGlobalAddMaslulFragment(null);
         addButton.setOnClickListener(Navigation.createNavigateOnClickListener(action));
 
         binding.progressBar.setVisibility(View.GONE);

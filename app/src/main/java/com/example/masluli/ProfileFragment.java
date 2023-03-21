@@ -108,7 +108,6 @@ public class ProfileFragment extends Fragment {
         String email = binding.profileEmailEt.getText().toString();
         String age = binding.profileAgeEt.getText().toString();
 
-
         if (!email.equals("") && !name.equals("") &&
                 !age.equals("") && !area.equals("")) {
 
