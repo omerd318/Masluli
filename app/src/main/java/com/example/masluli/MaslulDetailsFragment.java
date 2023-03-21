@@ -88,6 +88,7 @@ public class MaslulDetailsFragment extends Fragment
         Model.instance().getUserById(maslul.getUserId(), user -> {
             binding.maslulDetailsUserTv.setText(user.getName());
         });
+        binding.maslulDetailsRatingBar.setRating(maslul.getRating());
         binding.maslulDetailsDescriptionTv.setText(maslul.getDescription());
         binding.maslulDetailsAccessibleIv.setVisibility(visibilityBoolToInt((maslul.getAccessible())));
         binding.maslulDetailsWaterIv.setVisibility(visibilityBoolToInt((maslul.getWater())));
