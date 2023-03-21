@@ -54,6 +54,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
     MaslulMode mode = MaslulMode.Add;
     Maslul currMaslul;
     String[] difficulties;
+    String initialImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -138,23 +139,25 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         Maslul maslul = new Maslul(id, name, location, length, difficulty, isAccessible,
                                     isWater, isRounded, description, userId, rating, geoPoint);
 
-            if (isImageSelected) {
-                binding.addMaslulImg.setDrawingCacheEnabled(true);
-                binding.addMaslulImg.buildDrawingCache();
-                Bitmap bitmap = ((BitmapDrawable) binding.addMaslulImg.getDrawable()).getBitmap();
-                Model.instance().uploadImage(name + "_" + userId, bitmap, url-> {
-                    if (url != null) {
-                        maslul.setImageUrl(url);
-                    }
-                    Model.instance().addMaslul(maslul, (unused) -> {
-                        Navigation.findNavController(view).popBackStack();
-                    });
-                });
-            } else {
+        maslul.setImageUrl(initialImage);
+
+        if (isImageSelected) {
+            binding.addMaslulImg.setDrawingCacheEnabled(true);
+            binding.addMaslulImg.buildDrawingCache();
+            Bitmap bitmap = ((BitmapDrawable) binding.addMaslulImg.getDrawable()).getBitmap();
+            Model.instance().uploadImage(name + "_" + userId, bitmap, url-> {
+                if (url != null) {
+                    maslul.setImageUrl(url);
+                }
                 Model.instance().addMaslul(maslul, (unused) -> {
                     Navigation.findNavController(view).popBackStack();
                 });
-            }
+            });
+        } else {
+            Model.instance().addMaslul(maslul, (unused) -> {
+                Navigation.findNavController(view).popBackStack();
+            });
+        }
     }
 
     private boolean validateFields(ViewGroup viewGroup) {
@@ -201,6 +204,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         binding.addMaslulRoundToggleBtn.setChecked(currMaslul.getRounded());
         binding.addMaslulDescriptionEt.setText(currMaslul.getDescription());
         if (currMaslul.getImageUrl() != null && !currMaslul.getImageUrl().equals("")) {
+            initialImage = currMaslul.getImageUrl();
             Picasso.get().load(currMaslul.getImageUrl()).into(binding.addMaslulImg);
             binding.addMaslulGalleryBtn.setVisibility(View.VISIBLE);
             binding.addMaslulImg.setVisibility(View.VISIBLE);
