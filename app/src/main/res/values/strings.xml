@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Masluli</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="routeName">Route Name is...</string>
     <string name="routeLocation">Location?</string>
@@ -22,6 +21,7 @@
     <string name="myMaslulim">My Maslulim</string>
     <string name="routeRating">Rate this maslul</string>
     <string name="routeImage">Maslul image</string>
+<!--    <string name="google_api_key"></string>-->
     <string-array name="locations_array">
         <item>South</item>
         <item>East</item>

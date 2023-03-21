@@ -137,21 +137,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/maslul_details_description_tv"/>
 
-<!--        <com.google.android.gms.maps.MapView-->
-<!--            xmlns:map="http://schemas.android.com/apk/res-auto"-->
-<!--            android:id="@+id/maslul_details_map"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:apiKey="@string/google_api_key"-->
-<!--            android:clickable="false"-->
-<!--            android:contentDescription="@string/routeLocation"-->
-<!--            map:uiCompass="true"-->
-<!--            map:zOrderOnTop="true"-->
-<!--            map:uiZoomControls="true"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/maslul_details_img" />-->
+        <com.google.android.gms.maps.MapView
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/maslul_details_map"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="5dp"
+            android:apiKey="AIzaSyAyJkLoxPVHOqPrU7bQbEU2jdXL6sOdDVg"
+            android:clickable="false"
+            android:contentDescription="@string/routeLocation"
+            map:uiCompass="true"
+            map:zOrderOnTop="true"
+            map:uiZoomControls="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/maslul_details_img" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -24,18 +24,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 public class MaslulDetailsFragment extends Fragment
-//        implements OnMapReadyCallback
+        implements OnMapReadyCallback
 {
 
     private static final String ARG_MASLUL_ID = "maslulId";
-//    private static final int DEFAULT_ZOOM = 13;
-//    private static LatLng defaultLocation;
+    private static final int DEFAULT_ZOOM = 13;
+    private static LatLng defaultLocation;
 
     private String maslulId;
     FragmentMaslulDetailsBinding binding;
     Maslul maslul;
-//    MapView mapView;
-//    GoogleMap map;
+    MapView mapView;
+    GoogleMap map;
 //    AddMaslulFragment.MaslulMode mode;
 
     @Override
@@ -59,10 +59,10 @@ public class MaslulDetailsFragment extends Fragment
 
         setFragmentData(maslul);
 
-//        MapsInitializer.initialize(this.getActivity());
-//        mapView = view.findViewById(R.id.maslul_details_map);
-//        mapView.onCreate(savedInstanceState);
-//        mapView.getMapAsync(this);
+        MapsInitializer.initialize(this.getActivity());
+        mapView = view.findViewById(R.id.maslul_details_map);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
 
         binding.maslulDetailsWeatherBtn.setOnClickListener(v -> {
                 Navigation.findNavController(v).navigate(MaslulDetailsFragmentDirections.
@@ -95,28 +95,28 @@ public class MaslulDetailsFragment extends Fragment
         if (maslul.getImageUrl() != null && !maslul.getImageUrl().equals("")) {
             Picasso.get().load(maslul.getImageUrl()).into(binding.maslulDetailsImg);
         }
-//        defaultLocation = new LatLng(maslul.getLatitude(), maslul.getLongitude());
+        defaultLocation = new LatLng(maslul.getLatitude(), maslul.getLongitude());
     }
 
-//    @Override
-//    public void onMapReady(@NonNull GoogleMap googleMap) {
-//        map = googleMap;
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
-//
-//        googleMap.setOnMapClickListener(latLng -> {
-//            // Clear past markers
-//            map.clear();
-//
-//            // Initialize marker options
-//            MarkerOptions markerOptions = new MarkerOptions();
-//            markerOptions.title(latLng.latitude + ": " + latLng.longitude);
-//            // set position of marker
-//            markerOptions.position(latLng);
-//
-//            map.animateCamera(CameraUpdateFactory.newLatLngZoom(
-//                    latLng, 15
-//            ));
-////            map.addMarker(markerOptions);
-//        });
-//    }
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        map = googleMap;
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+
+        googleMap.setOnMapClickListener(latLng -> {
+            // Clear past markers
+            map.clear();
+
+            // Initialize marker options
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.title(latLng.latitude + ": " + latLng.longitude);
+            // set position of marker
+            markerOptions.position(latLng);
+
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    latLng, 15
+            ));
+//            map.addMarker(markerOptions);
+        });
+    }
 }
