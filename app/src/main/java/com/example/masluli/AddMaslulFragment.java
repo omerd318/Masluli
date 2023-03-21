@@ -117,7 +117,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         boolean isRounded = binding.addMaslulRoundToggleBtn.isChecked();
         String userId = Model.instance().getUserEmail();
         String description = binding.addMaslulDescriptionEt.getText().toString();
-//        int rating = (int) binding.addMaslulRatingBar.getRating();      // TODO: Add rating to Model
+        int rating = (int) binding.addMaslulRatingBar.getRating();
         GeoPoint geoPoint;
 
         if(mode == MaslulMode.Edit) {

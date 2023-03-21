@@ -22,7 +22,7 @@ public class Maslul {
     public static final String COLLECTION_NAME = "maslulim";
     public static final String LAST_UPDATED = "lastUpdated";
     public static final String LOCAL_LAST_UPDATED = "maslulim_local_last_update";
-//    private static final int MAX_RATING = 5;
+    private static final int MAX_RATING = 5;
 
     @PrimaryKey
     @NonNull
@@ -37,12 +37,12 @@ public class Maslul {
     String description;
     String userId;
     String imageUrl;
-//    int rating;
+    int rating;
     Long lastUpdated;  // on firebase
     GeoPoint latlng;
     Boolean isDeleted;
 
-    public Maslul(@NonNull String id, String title, String location, int length, Difficulty dif, Boolean isAccessible, Boolean isWater, Boolean isRounded, String description, String userId, GeoPoint latlng) {
+    public Maslul(@NonNull String id, String title, String location, int length, Difficulty dif, Boolean isAccessible, Boolean isWater, Boolean isRounded, String description, String userId, int rating, GeoPoint latlng) {
         this.id = id;
         this.title = title;
         this.location = location;
@@ -53,7 +53,7 @@ public class Maslul {
         this.isRounded = isRounded;
         this.description = description;
         this.userId = userId;
-//        this.rating = rating;
+        this.rating = rating;
         this.latlng = null;
         if(latlng != null) {
             this.latlng = new GeoPoint(latlng.getLatitude(), latlng.getLongitude());
@@ -73,7 +73,7 @@ public class Maslul {
         this.description = "";
         this.userId = "";
         this.lastUpdated = new Long(0);
-//        this.rating = 0;
+        this.rating = 0;
         this.latlng = new GeoPoint(0,0);
         this.isDeleted = false;
     }
@@ -106,7 +106,8 @@ public class Maslul {
         Boolean isRounded = (Boolean) maslulJson.get("isRounded");
         String description = (String) maslulJson.get("description");
         String userId = (String) maslulJson.get("userId");
-//        int rating = ((Long) maslulJson.get("rating")).intValue();
+        Long rating = ((Long)maslulJson.get("rating"));
+        int ratingInt = (rating != null) ? rating.intValue() : 0;
         String imageUrl = (String) maslulJson.get("imageUrl");
         GeoPoint latLng = (GeoPoint) maslulJson.get("latlng");
         Boolean isDeleted = (Boolean) maslulJson.get("isDeleted");
@@ -114,7 +115,7 @@ public class Maslul {
         Timestamp timestamp = (Timestamp) maslulJson.get(LAST_UPDATED);
         Long lastUpdated = timestamp.getSeconds();
 
-        Maslul maslulItem = new Maslul(docId, title, location, length, difficulty, isAccessible, isWater, isRounded, description, userId, latLng);
+        Maslul maslulItem = new Maslul(docId, title, location, length, difficulty, isAccessible, isWater, isRounded, description, userId, ratingInt, latLng);
 
         maslulItem.setLastUpdated(lastUpdated);
         maslulItem.setImageUrl(imageUrl);
@@ -135,7 +136,7 @@ public class Maslul {
         json.put("isRounded", isRounded);
         json.put("description", description);
         json.put("userId", userId);
-//        json.put("rating", rating);
+        json.put("rating", rating);
         json.put("imageUrl", imageUrl);
         json.put("latlng", latlng);
         json.put("isDeleted", isDeleted);
@@ -225,17 +226,17 @@ public class Maslul {
         this.userId = userId;
     }
 
-//    public int getRating() {
-//        return rating;
-//    }
-//
-//    public void setRating(int rating) {
-//        if(rating > MAX_RATING) {
-//            rating = MAX_RATING;
-//        }
-//
-//        this.rating = rating;
-//    }
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        if(rating > MAX_RATING) {
+            this.rating = MAX_RATING;
+        } else {
+            this.rating = rating;
+        }
+    }
 
     public Boolean getDeleted() {
         return isDeleted;

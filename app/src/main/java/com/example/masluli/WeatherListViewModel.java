@@ -10,8 +10,11 @@ import java.util.List;
 
 public class WeatherListViewModel extends ViewModel {
 
-    // TODO: change latlng to not be hard coded - from view maslul
-    private LiveData<List<Forecastday>> data = WeatherModel.instance.getWeatherForecast("31.318543799474224,35.36236301064491", "3");
+    private LiveData<List<Forecastday>> data;
+
+    public WeatherListViewModel(String latLng) {
+        data = WeatherModel.instance.getWeatherForecast(latLng, "3");
+    }
 
     LiveData<List<Forecastday>> getData(){
         return data;
