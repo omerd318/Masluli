@@ -43,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|start"
+            android:layout_marginTop="5dp"
             android:clickable="false"
             android:numStars="5"
             android:stepSize="1"
@@ -52,7 +53,7 @@
         <LinearLayout
             android:id="@+id/maslul_details_data_ll"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="left"
             android:orientation="horizontal"
@@ -62,7 +63,7 @@
             <ImageView
                 android:id="@+id/maslul_details_accessible_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:visibility="visible"
@@ -71,7 +72,7 @@
             <ImageView
                 android:id="@+id/maslul_details_water_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_water"
@@ -80,7 +81,7 @@
             <ImageView
                 android:id="@+id/maslul_details_round_iv"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_restart" />
         </LinearLayout>
@@ -135,11 +136,12 @@
             android:layout_marginVertical="15dp"
             android:layout_marginHorizontal="5dp"
             android:scaleType="centerCrop"
+            android:layout_marginTop="10dp"
             android:src="@drawable/no_image_maslul"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize8Percent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/maslul_details_description_tv"/>
+            app:layout_constraintTop_toBottomOf="@+id/maslul_details_description_tv" />
 
         <com.google.android.gms.maps.MapView
             xmlns:map="http://schemas.android.com/apk/res-auto"

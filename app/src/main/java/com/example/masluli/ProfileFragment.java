@@ -13,10 +13,16 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.navigation.NavController;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -53,6 +59,7 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
@@ -62,6 +69,9 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+
+        // Remove 'back' icon from action bar
+        ((AppCompatActivity)getActivity()).getSupportActionBar(). setDisplayHomeAsUpEnabled(false);
     }
 
     @Override

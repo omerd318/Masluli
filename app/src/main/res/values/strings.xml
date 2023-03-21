@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Masluli</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="routeName">Route Name is...</string>
-    <string name="routeLocation">Location?</string>
+    <string name="routeName">Maslul Name</string>
+    <string name="routeLocation">Location</string>
     <string name="routeLength">Length in KM</string>
-    <string name="routeDiffLvl">Difficulty level is...</string>
+    <string name="routeDiffLvl">Difficulty level</string>
     <string name="routeDescription">How was your Maslul?</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
