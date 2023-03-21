@@ -128,7 +128,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         }
 
         Maslul maslul = new Maslul(id, name, location, length, difficulty, isAccessible,
-                                    isWater, isRounded, description, userId, raiting, geoPoint);
+                                    isWater, isRounded, description, userId, rating, geoPoint);
 
             if (isImageSelected) {
                 binding.addMaslulImg.setDrawingCacheEnabled(true);

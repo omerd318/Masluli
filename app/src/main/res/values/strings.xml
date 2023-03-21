@@ -21,7 +21,6 @@
     <string name="myMaslulim">My Maslulim</string>
     <string name="routeRating">Rate this maslul</string>
     <string name="routeImage">Maslul image</string>
-<!--    <string name="google_api_key"></string>-->
     <string-array name="locations_array">
         <item>South</item>
         <item>East</item>

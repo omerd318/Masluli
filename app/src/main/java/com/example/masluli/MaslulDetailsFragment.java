@@ -29,7 +29,6 @@ public class MaslulDetailsFragment extends Fragment
 
     private static final String ARG_MASLUL_ID = "maslulId";
     private static final int DEFAULT_ZOOM = 13;
-    private static LatLng defaultLocation;
 
     private String maslulId;
     FragmentMaslulDetailsBinding binding;
@@ -59,7 +58,7 @@ public class MaslulDetailsFragment extends Fragment
 
         setFragmentData(maslul);
 
-        MapsInitializer.initialize(this.getActivity());
+//        MapsInitializer.initialize(this.getActivity());
         mapView = view.findViewById(R.id.maslul_details_map);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
@@ -97,28 +96,34 @@ public class MaslulDetailsFragment extends Fragment
         if (maslul.getImageUrl() != null && !maslul.getImageUrl().equals("")) {
             Picasso.get().load(maslul.getImageUrl()).into(binding.maslulDetailsImg);
         }
-        defaultLocation = new LatLng(maslul.getLatitude(), maslul.getLongitude());
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+        LatLng maslulLocation = new LatLng(maslul.getLatitude(), maslul.getLongitude());
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(maslulLocation, DEFAULT_ZOOM));
 
-        googleMap.setOnMapClickListener(latLng -> {
-            // Clear past markers
-            map.clear();
+        // Add marker on the location of the maslul
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(maslulLocation);
+        markerOptions.title(maslul.getTitle());
+        map.addMarker(markerOptions);
+    }
 
-            // Initialize marker options
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.title(latLng.latitude + ": " + latLng.longitude);
-            // set position of marker
-            markerOptions.position(latLng);
-
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    latLng, 15
-            ));
-//            map.addMarker(markerOptions);
-        });
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 }

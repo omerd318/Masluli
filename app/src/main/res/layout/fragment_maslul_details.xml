@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,8 +9,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/ShapeAppearanceOverlay.App.CornerSize8Percent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/masluli_cards"
         android:padding="10dp">
 
@@ -42,7 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|start"
             android:clickable="false"
-            android:contentDescription="@string/routeRating"
             android:numStars="5"
             android:stepSize="1"
             app:layout_constraintStart_toStartOf="parent"
@@ -127,12 +128,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/maslul_details_user_tv" />
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/maslul_details_img"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginVertical="15dp"
+            android:layout_marginHorizontal="5dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/no_image_maslul"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize8Percent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/maslul_details_description_tv"/>
@@ -142,8 +146,9 @@
             android:id="@+id/maslul_details_map"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="5dp"
-            android:apiKey="AIzaSyAyJkLoxPVHOqPrU7bQbEU2jdXL6sOdDVg"
+            android:layout_marginVertical="15dp"
+            android:layout_marginHorizontal="5dp"
+            android:apiKey="@string/google_api_key"
             android:clickable="false"
             android:contentDescription="@string/routeLocation"
             map:uiCompass="true"
@@ -151,8 +156,9 @@
             map:uiZoomControls="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/maslul_details_img" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</ScrollView>
