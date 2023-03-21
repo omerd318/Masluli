@@ -1,9 +1,7 @@
 package com.example.masluli;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -14,6 +12,9 @@ import android.view.ViewGroup;
 import com.example.masluli.databinding.FragmentWeatherBinding;
 
 public class WeatherFragment extends Fragment {
+    private static final String ARG_MASLUL_LATLNG = "maslulLatlng";
+    private String maslulLatlng;
+
     FragmentWeatherBinding binding;
     WeatherListAdapter adapter;
     WeatherListViewModel viewModel;
@@ -21,6 +22,10 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            maslulLatlng = getArguments().getString(ARG_MASLUL_LATLNG);
+            viewModel = new WeatherListViewModel(maslulLatlng);
+        }
     }
 
     @Override
@@ -42,11 +47,5 @@ public class WeatherFragment extends Fragment {
         });
 
         return view;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        viewModel = new WeatherListViewModel();
     }
 }

@@ -65,8 +65,9 @@ public class MaslulDetailsFragment extends Fragment
 //        mapView.getMapAsync(this);
 
         binding.maslulDetailsWeatherBtn.setOnClickListener(v -> {
-                Navigation.findNavController(v).navigate(MaslulDetailsFragmentDirections.
-                                                         actionMaslulDetailsFragmentToWeatherFragment());
+            String latLng = maslul.getLatitude() + "," + maslul.getLongitude();
+            Navigation.findNavController(v).navigate(MaslulDetailsFragmentDirections.
+                                                     actionMaslulDetailsFragmentToWeatherFragment(latLng));
         });
 
         return view;
