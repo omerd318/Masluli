@@ -52,7 +52,8 @@
         tools:layout="@layout/fragment_maslul_details">
         <argument
             android:name="maslulId"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_maslulDetailsFragment_to_weatherFragment"
             app:destination="@id/weatherFragment" />

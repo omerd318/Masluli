@@ -7,14 +7,19 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.example.masluli.Model.Maslul;
 import com.example.masluli.Model.Model;
@@ -93,10 +98,13 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
             });
 
             setEditMaslulFragment();
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Edit Maslul");
         }
 
         binding.addMaslulSaveBtn.setOnClickListener(view1 -> {
-            saveNewMaslul(view1);
+            if(validateFields(container)) {
+                saveNewMaslul(view1);
+            };
         });
 
         binding.addMaslulGalleryBtn.setOnClickListener(view1->{
@@ -128,7 +136,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         }
 
         Maslul maslul = new Maslul(id, name, location, length, difficulty, isAccessible,
-                                    isWater, isRounded, description, userId, raiting, geoPoint);
+                                    isWater, isRounded, description, userId, rating, geoPoint);
 
             if (isImageSelected) {
                 binding.addMaslulImg.setDrawingCacheEnabled(true);
@@ -149,13 +157,44 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
             }
     }
 
+    private boolean validateFields(ViewGroup viewGroup) {
+        if(TextUtils.isEmpty(binding.addMaslulNameEt.getText()) ||
+           TextUtils.isEmpty(binding.addMaslulLocationEt.getText()) ||
+           TextUtils.isEmpty(binding.addMaslulLengthEt.getText()) ||
+           TextUtils.isEmpty(binding.addMaslulDiffLvlAc.getText()) ||
+           TextUtils.isEmpty(binding.addMaslulDescriptionEt.getText()) ||
+           binding.addMaslulRatingBar.getRating() < 1 ||
+           binding.addMaslulRatingBar.getRating() > 5) {
+            Toast.makeText(getContext(), "All fields are required",
+                    Toast.LENGTH_SHORT).show();
+
+            return false;
+        }
+
+        return true;
+
+//        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+//            View view = viewGroup.getChildAt(i);
+//            if (view instanceof ViewGroup)
+//                validateFields((ViewGroup) view);
+//            else if (view instanceof EditText) {
+//                EditText edittext = (EditText) view;
+//                if (edittext.getText().toString().trim().equals("")) {
+//                    edittext.setError("Required!");
+//                    return false;
+//                }
+//            }
+//        }
+//
+//        return true;
+    }
+
     private void setEditMaslulFragment() {
         binding.addMaslulNameEt.setText(currMaslul.getTitle());
         binding.addMaslulLocationEt.setText(currMaslul.getLocation());
         binding.addMaslulLengthEt.setText(Integer.toString(currMaslul.getLength()));
         binding.addMaslulDiffLvlAc.setText(currMaslul.getDifficulty().name());
         binding.addMaslulDiffLvlAc.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, difficulties));
-//        binding.addMaslulDiffLvlAc.setDropDownAnchor();
         binding.addMaslulAccessibleToggleBtn.setChecked(currMaslul.getAccessible());
         binding.addMaslulWaterToggleBtn.setChecked(currMaslul.getWater());
         binding.addMaslulRoundToggleBtn.setChecked(currMaslul.getRounded());
@@ -173,10 +212,12 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
 
         if(mode == MaslulMode.Edit) {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(currMaslul.getLatitude(), currMaslul.getLongitude()), DEFAULT_ZOOM));
             map.addMarker(new MarkerOptions()
                     .position(new LatLng(currMaslul.getLatitude(), currMaslul.getLongitude()))
                     .title(currMaslul.getTitle()));
-        } else {        // mode == Add
+        } else {
             googleMap.setOnMapClickListener(latLng -> {
                 // Clear past markers
                 map.clear();
