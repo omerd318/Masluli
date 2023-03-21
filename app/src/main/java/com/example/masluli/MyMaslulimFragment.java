@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 
 import com.example.masluli.Model.Maslul;
 import com.example.masluli.Model.Model;
-import com.example.masluli.databinding.FragmentMaslulimBinding;
+import com.example.masluli.databinding.FragmentMyMaslulimBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +30,7 @@ import com.example.masluli.databinding.FragmentMaslulimBinding;
  */
 public class MyMaslulimFragment extends Fragment {
 
-    FragmentMaslulimBinding binding;
+    FragmentMyMaslulimBinding binding;
     MaslulimListAdapter adapter;
     MaslulimListViewModel viewModel;
 
@@ -57,14 +57,14 @@ public class MyMaslulimFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentMaslulimBinding.inflate(inflater, container, false);
+        binding = FragmentMyMaslulimBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.maslulimListRv.setHasFixedSize(true);
-        binding.maslulimListRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.myMaslulimListRv.setHasFixedSize(true);
+        binding.myMaslulimListRv.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new MaslulimListAdapter(getLayoutInflater(),viewModel.getData().getValue());
 
-        binding.maslulimListRv.setAdapter(adapter);
+        binding.myMaslulimListRv.setAdapter(adapter);
 
         adapter.setOnItemClickListener((v, position) -> {
             Maslul maslul = viewModel.getData().getValue().get(position);
@@ -79,10 +79,10 @@ public class MyMaslulimFragment extends Fragment {
         });
 
         Model.instance().EventMaslulimListLoadingState.observe(getViewLifecycleOwner(), status->{
-            binding.maslulimListRvSwipeRefresh.setRefreshing(status == Model.MaslulimListLoadingState.LOADING);
+            binding.myMaslulimListRvSwipeRefresh.setRefreshing(status == Model.MaslulimListLoadingState.LOADING);
         });
 
-        binding.maslulimListRvSwipeRefresh.setOnRefreshListener(()->{
+        binding.myMaslulimListRvSwipeRefresh.setOnRefreshListener(()->{
             reloadData();
         });
 
