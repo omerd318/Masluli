@@ -200,7 +200,7 @@
             android:id="@+id/add_maslul_description"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -220,7 +220,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:elegantTextHeight="false"
-                android:inputType="textLongMessage|textImeMultiLine"
+                android:inputType="textMultiLine"
                 android:textColorHint="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
