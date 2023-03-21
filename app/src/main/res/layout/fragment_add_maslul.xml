@@ -273,7 +273,7 @@
 
             <ImageView
                 android:id="@+id/add_maslul_img"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
                 android:src="@drawable/no_image_maslul"
