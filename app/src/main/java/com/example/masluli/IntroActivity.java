@@ -13,19 +13,19 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
-        Model.instance.executor.execute(() -> {
+        Model.instance().executor.execute(() -> {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            if (Model.instance.isSignedIn()){
-                Model.instance.mainThread.post(() -> {
+            if (Model.instance().isSignedIn()){
+                Model.instance().mainThread.post(() -> {
                     toFeedActivity();
                 });
             }else{
-                Model.instance.mainThread.post(() -> {
+                Model.instance().mainThread.post(() -> {
                     toLoginActivity();
                 });
             }

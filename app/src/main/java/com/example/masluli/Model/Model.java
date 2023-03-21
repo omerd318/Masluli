@@ -30,7 +30,7 @@ public class Model {
             "South"
     };
 
-    public static final Model instance = new Model();
+    private static final Model instance = new Model();
     private FirebaseModel firebaseModel = new FirebaseModel();
     public Executor executor = Executors.newFixedThreadPool(1);
     public Handler mainThread = HandlerCompat.createAsync(Looper.getMainLooper());

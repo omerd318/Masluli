@@ -102,7 +102,7 @@ public class RegisterFragment extends Fragment {
 
             binding.registerProgressbar.setVisibility(View.VISIBLE);
 
-            Model.instance.register(email, password, user -> {
+            Model.instance().register(email, password, user -> {
                 if(user != null) {
                     User newUser = new User(name, email, age, area);
 
