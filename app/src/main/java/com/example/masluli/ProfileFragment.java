@@ -83,8 +83,8 @@ public class ProfileFragment extends Fragment {
         initSpinner(view);
         binding.profileProgressbar.setVisibility(View.GONE);
 
-        String signedUser = Model.instance.getUserEmail();
-        Model.instance.getUserById(signedUser, user -> {
+        String signedUser = Model.instance().getUserEmail();
+        Model.instance().getUserById(signedUser, user -> {
             binding.profileEmailEt.setText(user.getEmail());
             binding.profileEmailEt.setEnabled(false);
             binding.profileNameEt.setText(user.getName());

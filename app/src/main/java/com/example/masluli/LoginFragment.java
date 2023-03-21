@@ -35,7 +35,7 @@ public class LoginFragment extends Fragment {
 
             if(!email.equals("") && !password.equals("")) {
                 binding.loginProgressbar.setVisibility(View.VISIBLE);
-                Model.instance.login(email, password, user -> {
+                Model.instance().login(email, password, user -> {
                     binding.loginProgressbar.setVisibility(View.GONE);
                     if (user != null) {
                         toMainScreen();
