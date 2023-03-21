@@ -34,6 +34,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.firestore.GeoPoint;
 import com.squareup.picasso.Picasso;
 
+import java.sql.Timestamp;
+
 public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
     public enum MaslulMode {
         Edit,
@@ -70,8 +72,12 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
             if (result != null){
                 binding.addMaslulImg.setImageURI(result);
-//                binding.addMaslulGalleryBtn.setVisibility(View.INVISIBLE);
-//                binding.addMaslulImg.setVisibility(View.VISIBLE);
+                if(mode == MaslulMode.Add) {
+                    binding.addMaslulImg.setVisibility(View.GONE);
+                } else {
+                    binding.addMaslulGalleryBtn.setVisibility(View.VISIBLE);
+                    binding.addMaslulImg.setVisibility(View.VISIBLE);
+                }
                 isImageSelected = true;
             }
         });
@@ -86,6 +92,8 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         difficulties = getResources().getStringArray(R.array.difficulties_array);
         binding.addMaslulDiffLvlAc.setAdapter(
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, difficulties));
+
+        binding.addMaslulProgressBar.setVisibility(View.GONE);
 
         MapsInitializer.initialize(this.getActivity());
         mapView = view.findViewById(R.id.add_maslul_map_view);
@@ -103,6 +111,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
 
         binding.addMaslulSaveBtn.setOnClickListener(view1 -> {
             if(validateFields(container)) {
+                binding.addMaslulProgressBar.setVisibility(View.VISIBLE);
                 saveNewMaslul(view1);
             };
         });
@@ -127,6 +136,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         String description = binding.addMaslulDescriptionEt.getText().toString();
         int rating = (int) binding.addMaslulRatingBar.getRating();
         GeoPoint geoPoint;
+        String imgId = name + "_" + new Timestamp(System.currentTimeMillis());
 
         if(mode == MaslulMode.Edit) {
             id = currMaslul.getId();
@@ -142,16 +152,18 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
                 binding.addMaslulImg.setDrawingCacheEnabled(true);
                 binding.addMaslulImg.buildDrawingCache();
                 Bitmap bitmap = ((BitmapDrawable) binding.addMaslulImg.getDrawable()).getBitmap();
-                Model.instance().uploadImage(name + "_" + userId, bitmap, url-> {
+                Model.instance().uploadImage(imgId, bitmap, url-> {
                     if (url != null) {
                         maslul.setImageUrl(url);
                     }
                     Model.instance().addMaslul(maslul, (unused) -> {
+                        binding.addMaslulProgressBar.setVisibility(View.GONE);
                         Navigation.findNavController(view).popBackStack();
                     });
                 });
             } else {
                 Model.instance().addMaslul(maslul, (unused) -> {
+                    binding.addMaslulProgressBar.setVisibility(View.GONE);
                     Navigation.findNavController(view).popBackStack();
                 });
             }
@@ -172,21 +184,6 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         }
 
         return true;
-
-//        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-//            View view = viewGroup.getChildAt(i);
-//            if (view instanceof ViewGroup)
-//                validateFields((ViewGroup) view);
-//            else if (view instanceof EditText) {
-//                EditText edittext = (EditText) view;
-//                if (edittext.getText().toString().trim().equals("")) {
-//                    edittext.setError("Required!");
-//                    return false;
-//                }
-//            }
-//        }
-//
-//        return true;
     }
 
     private void setEditMaslulFragment() {
@@ -201,6 +198,7 @@ public class AddMaslulFragment extends Fragment implements OnMapReadyCallback {
         binding.addMaslulRoundToggleBtn.setChecked(currMaslul.getRounded());
         binding.addMaslulDescriptionEt.setText(currMaslul.getDescription());
         if (currMaslul.getImageUrl() != null && !currMaslul.getImageUrl().equals("")) {
+            isImageSelected = true;
             Picasso.get().load(currMaslul.getImageUrl()).into(binding.addMaslulImg);
             binding.addMaslulGalleryBtn.setVisibility(View.VISIBLE);
             binding.addMaslulImg.setVisibility(View.VISIBLE);
